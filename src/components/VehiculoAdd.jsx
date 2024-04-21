@@ -6,6 +6,10 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import SaveIcon from "@mui/icons-material/Save";
+import DropdownTipoMarca from './TipoMarca.jsx';
+import DropdownTipoVehiculo from './TipoVehiculo.jsx';
+import DropdownTipoMotor from './TipoMotor.jsx';
+
 
 
 
@@ -80,6 +84,18 @@ const AddVehiculo = () => {
     }
   }, [id]);
 
+  const handleMarcaChange = (marca) => {
+    setMarca(marca);
+  }
+
+  const handleTipoVehiculoChange = (tipoVehiculo) => {
+    setTipoVehiculo(tipoVehiculo);
+  }
+
+  const handleTipoMotorChange = (tipoMotor) => {
+    setTipoMotor(tipoMotor);
+  }
+
   return (
     <Box
       display="flex"
@@ -111,17 +127,7 @@ const AddVehiculo = () => {
           />
         </FormControl>
 
-        <FormControl fullWidth>
-          <TextField
-            id="marca"
-            label="Marca"
-            value={marca}
-            variant="standard"
-            onChange={(e) => setMarca(e.target.value)}
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
-          />
-        </FormControl>
+        <DropdownTipoMarca onChange={handleMarcaChange} />
 
         <FormControl fullWidth>
           <TextField
@@ -147,29 +153,10 @@ const AddVehiculo = () => {
           />
         </FormControl>
 
-        <FormControl fullWidth>
-          <TextField
-            id="tipoVehiculo"
-            label="Tipo de Vehículo"
-            value={tipoVehiculo}
-            variant="standard"
-            onChange={(e) => setTipoVehiculo(e.target.value)}
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
-          />
-        </FormControl>
+        <DropdownTipoVehiculo onChange={handleTipoVehiculoChange} />
 
-        <FormControl fullWidth>
-          <TextField
-            id="tipoMotor"
-            label="Tipo de Motor"
-            value={tipoMotor}
-            variant="standard"
-            onChange={(e) => setTipoMotor(e.target.value)}
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
-          />
-        </FormControl>
+        <DropdownTipoMotor onChange={handleTipoMotorChange} />
+
 
         <FormControl fullWidth>
           <TextField

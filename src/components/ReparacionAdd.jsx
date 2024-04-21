@@ -6,12 +6,14 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import SaveIcon from "@mui/icons-material/Save";
-
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
+import  DropdownTipoReparacion  from './TipoReparacion';
 
 
 const AddReparacion = () => {
   const [idVehiculo, setIdVehiculo] = useState(""); // Patente en lugar de rut, según la entidad
-  const [fechaHoraIngreso, setFechaHoraIngreso] = useState("");
+  const [fechaHoraIngreso, setFechaHoraIngreso] = useState(new Date());
   const [fechaHoraSalida, setFechaHoraSalida] = useState("");
   const [fechaHoraRetiro, setFechaHoraRetiro] = useState("");
   const [tipoReparacion, setTipoReparacion] = useState("");
@@ -82,6 +84,54 @@ const AddReparacion = () => {
       setTitleReparacionForm("Nueva Reparacion");
     }
   }, [id]);
+
+
+    const handleDateChangeIngreso = (date) => {
+        setFechaHoraIngreso(date);
+    };
+
+    const handleSetCurrentDateTimeIngreso = () => {
+        const currentDateTime = new Date();
+        setFechaHoraIngreso(currentDateTime);
+    };
+
+    const handleTimeChangeIngreso = (time) => {
+        const newDate = fechaHoraIngreso.setHours(time.hours(), time.minutes(), 0, 0);
+        setFechaHoraIngreso(newDate);
+    };
+
+    const handleDateChangeSalida = (date) => {
+        setFechaHoraSalida(date);
+    };
+
+    const handleSetCurrentDateTimeSalida = () => {
+        const currentDateTime = new Date();
+        setFechaHoraSalida(currentDateTime);
+    };
+
+    const handleTimeChangeSalida = (time) => {
+        const newDate = fechaHoraSalida.setHours(time.hours(), time.minutes(), 0, 0);
+        setFechaHoraSalida(newDate);
+    };
+
+    const handleDateChangeRetiro = (date) => {
+        setFechaHoraRetiro(date);
+    };
+
+    const handleSetCurrentDateTimeRetiro = () => {
+        const currentDateTime = new Date();
+        setFechaHoraRetiro(currentDateTime);
+    };
+
+    const handleTimeChangeRetiro = (time) => {
+        const newDate = fechaHoraRetiro.setHours(time.hours(), time.minutes(), 0, 0);
+        setFechaHoraRetiro(newDate);
+    };
+
+    const handleTipoReparacionChange = (tipoReparacion) => {
+        setTipoReparacion(tipoReparacion);
+    }
+
   
 
   return (
@@ -105,7 +155,7 @@ const AddReparacion = () => {
         <FormControl fullWidth>
             <TextField
             id="idVehiculo"
-            label="Patente"
+            label="id vehiculo"
             value={idVehiculo}
             variant="standard"
             onChange={(e) => setIdVehiculo(e.target.value)}
@@ -116,52 +166,96 @@ const AddReparacion = () => {
         </FormControl>
 
         <FormControl fullWidth>
-            <TextField
-            id="fechaHoraIngreso"
-            label="Fecha y Hora de Ingreso"
-            value={fechaHoraIngreso}
-            variant="standard"
-            onChange={(e) => setFechaHoraIngreso(e.target.value)}
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
-            />
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <div style={{ flex: '1' }}>
+                    <Datetime
+                        inputProps={{ style: { color: "#f0f0f0" } }}
+                        value={fechaHoraIngreso}
+                        onChange={handleDateChangeIngreso}
+                        dateFormat="YYYY-MM-DD"
+                        timeFormat={false}
+                        locale="es"
+                    />
+                </div>
+                <div>
+                    <Datetime
+                        inputProps={{ style: { color: "#f0f0f0" } }}
+                        value={fechaHoraIngreso}
+                        onChange={handleTimeChangeIngreso}
+                        dateFormat={false}
+                        timeFormat="HH:mm"
+                        locale="es"
+                    />
+                </div>
+                <div>
+                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeIngreso}>
+                        Establecer actual
+                    </Button>
+                </div>
+            </div>
         </FormControl>
 
         <FormControl fullWidth>
-            <TextField
-            id="fechaHoraSalida"
-            label="Fecha y Hora de Salida"
-            value={fechaHoraSalida}
-            variant="standard"
-            onChange={(e) => setFechaHoraSalida(e.target.value)}
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
-            />
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <div style={{ flex: '1' }}>
+                    <Datetime
+                        inputProps={{ style: { color: "#f0f0f0" } }}
+                        value={fechaHoraSalida}
+                        onChange={handleDateChangeSalida}
+                        dateFormat="YYYY-MM-DD"
+                        timeFormat={false}
+                        locale="es"
+                    />
+                </div>
+                <div>
+                    <Datetime
+                        inputProps={{ style: { color: "#f0f0f0" } }}
+                        value={fechaHoraSalida}
+                        onChange={handleTimeChangeSalida}
+                        dateFormat={false}
+                        timeFormat="HH:mm"
+                        locale="es"
+                    />
+                </div>
+                <div>
+                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeSalida}>
+                        Establecer actual
+                    </Button>
+                </div>
+            </div>
         </FormControl>
 
         <FormControl fullWidth>
-            <TextField
-            id="fechaHoraRetiro"
-            label="Fecha y Hora de Retiro"
-            value={fechaHoraRetiro}
-            variant="standard"
-            onChange={(e) => setFechaHoraRetiro(e.target.value)}
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
-            />
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <div style={{ flex: '1' }}>
+                    <Datetime
+                        inputProps={{ style: { color: "#f0f0f0" } }}
+                        value={fechaHoraRetiro}
+                        onChange={handleDateChangeRetiro}
+                        dateFormat="YYYY-MM-DD"
+                        timeFormat={false}
+                        locale="es"
+                    />
+                </div>
+                <div>
+                    <Datetime
+                        inputProps={{ style: { color: "#f0f0f0" } }}
+                        value={fechaHoraRetiro}
+                        onChange={handleTimeChangeRetiro}
+                        dateFormat={false}
+                        timeFormat="HH:mm"
+                        locale="es"
+                    />
+                </div>
+                <div>
+                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeRetiro}>
+                        Establecer actual
+                    </Button>
+                </div>
+            </div>
         </FormControl>
 
-        <FormControl fullWidth>
-            <TextField
-            id="tipoReparacion"
-            label="Tipo de Reparación"
-            value={tipoReparacion}
-            variant="standard"
-            onChange={(e) => setTipoReparacion(e.target.value)}
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
-            />
-        </FormControl>
+        <DropdownTipoReparacion onChange={handleTipoReparacionChange} />
 
         <FormControl fullWidth>
             <TextField
