@@ -3,13 +3,12 @@ import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 // eslint-disable-next-line react/prop-types
 function DropdownTipoReparacion({onChange}) {
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [, setTipoReparacion] = useState('');
+  const [selectedOptions, setSelectedOptions] = useState('');
 
   const handleChange = (event) => {
-    setSelectedOptions(event.target.value);
-    setTipoReparacion(event.target.value.join(','));
-    onChange(event.target.value);
+    const selectedValues = event.target.value.join(',');
+    setSelectedOptions(selectedValues);
+    onChange(selectedValues);
   };
 
   return (
@@ -19,7 +18,7 @@ function DropdownTipoReparacion({onChange}) {
         labelId="tipoReparacion-label"
         id="tipoReparacion"
         multiple
-        value={selectedOptions}
+        value={selectedOptions.split(',')}
         onChange={handleChange}
         inputProps={{
           style: { color: "#f0f0f0" }

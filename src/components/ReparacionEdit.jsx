@@ -10,48 +10,66 @@ import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import  DropdownTipoReparacion  from './TipoReparacion';
 
-const AddReparacion = () => {
-    const { idVehiculo } = useParams();
-    const [vehiculoId, ] = useState(parseInt(idVehiculo)); // Parse idVehiculo as integer
-    const [fechaHoraIngreso, setFechaHoraIngreso] = useState(new Date());
-    const [fechaHoraSalida, setFechaHoraSalida] = useState("");
-    const [fechaHoraRetiro, setFechaHoraRetiro] = useState("");
-    const [tipoReparacion, setTipoReparacion] = useState("");
-    const [montoTotal, setMontoTotal] = useState(0); // Assuming montoTotal is a number
-    const [titleReparacionForm, setTitleReparacionForm] = useState("");
-    const [id] = useState(0); // According to the entity
-    const navigate = useNavigate();
 
-    const saveReparacion = (e) => {
-        e.preventDefault();
+const EditReparacion = () => {
+  const [idVehiculo, setIdVehiculo] = useState(""); //  según la entidad
+  const [fechaHoraIngreso, setFechaHoraIngreso] = useState(new Date());
+  const [fechaHoraSalida, setFechaHoraSalida] = useState("");
+  const [fechaHoraRetiro, setFechaHoraRetiro] = useState("");
+  const [tipoReparacion, setTipoReparacion] = useState("");
+  const [montoTotal, setMontoTotal] = useState(0); // Asumiendo que nroAsientos es un número
+  const { id } = useParams();
+  const [titleReparacionForm, setTitleReparacionForm] = useState("");
+  const navigate = useNavigate();
 
-        const reparacion = { 
-            idVehiculo: vehiculoId, // Use vehiculoId instead of idVehiculo
-            fechaHoraIngreso, 
-            fechaHoraSalida, 
-            fechaHoraRetiro, 
-            tipoReparacion, 
-            montoTotal,
-            id
-        };
-        
-        reparacionService
-            .create(reparacion)
-            .then((response) => {
-                console.log("reparacion ha sido añadido.", response.data);
-                navigate("/reparacion/list");
-            })
-            .catch((error) => {
-                console.log(
-                    "Ha ocurrido un error al intentar crear nueva reparacion.",
-                    error
-                );
-            });
-    };
+  const saveReparacion = (e) => {
+    e.preventDefault();
 
-    useEffect(() => {
-        setTitleReparacionForm("Agregar reparacion");
-    }, []);
+    const reparacion = { 
+        idVehiculo, 
+        fechaHoraIngreso, 
+        fechaHoraSalida, 
+        fechaHoraRetiro, 
+        tipoReparacion, 
+        montoTotal,
+        id
+      };
+
+    if (id) {
+      //Actualizar Datos
+      reparacionService
+        .update(reparacion)
+        .then((response) => {
+          console.log("reparacion ha sido actualizado.", response.data);
+          navigate("/reparacion/list");
+        })
+        .catch((error) => {
+          console.log(
+            "Ha ocurrido un error al intentar actualizar datos del reparacion.",
+            error
+          );
+        });
+    }
+  };
+  useEffect(() => {
+    if (id) {
+      setTitleReparacionForm("Editar reparacion");
+      reparacionService
+        .get(id)
+        .then((reparacion) => {
+          setIdVehiculo(reparacion.data.idVehiculo);
+          setFechaHoraIngreso(reparacion.data.fechaHoraIngreso);
+          setFechaHoraSalida(reparacion.data.fechaHoraSalida);
+          setFechaHoraRetiro(reparacion.data.fechaHoraRetiro);
+          setTipoReparacion(reparacion.data.tipoReparacion);
+          setMontoTotal(reparacion.data.montoTotal);
+        })
+        .catch((error) => {
+          console.log("Se ha producido un error.", error);
+        });
+    }
+  }, [id]);
+
 
     const handleDateChangeIngreso = (date) => {
         setFechaHoraIngreso(date);
@@ -99,6 +117,8 @@ const AddReparacion = () => {
         setTipoReparacion(tipoReparacion);
     }
 
+  
+
   return (
     <Box
       display="flex"
@@ -117,6 +137,18 @@ const AddReparacion = () => {
       <hr style={{ width: "100%", border: "none", borderBottom: "1px solid #fff", marginBottom: "20px" }} />
       <hr />
       <form>
+        <FormControl fullWidth>
+            <TextField
+            id="idVehiculo"
+            label="id vehiculo"
+            value={idVehiculo}
+            variant="standard"
+            onChange={(e) => setIdVehiculo(e.target.value)}
+            helperText="Ej. ABC123"
+            InputLabelProps={{ style: { color: "#f0f0f0" } }}
+            InputProps={{ style: { color: "#f0f0f0" } }}
+            />
+        </FormControl>
 
         <FormControl fullWidth>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
@@ -242,4 +274,4 @@ const AddReparacion = () => {
   );
 };
 
-export default AddReparacion;
+export default EditReparacion;

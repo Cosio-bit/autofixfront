@@ -4,8 +4,8 @@ const getAll = () => {
     return httpClient.get('/api/v1/reparaciones/');
 }
 
-const create = idVehiculo => {
-    return httpClient.post(`/api/v1/reparaciones/crearReparacion/${idVehiculo}`);
+const create = data => {
+    return httpClient.post('/api/v1/reparaciones/crearReparacion', data);
 }
 
 const getFromVehiculo = idVehiculo => {

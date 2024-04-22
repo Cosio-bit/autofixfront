@@ -66,6 +66,14 @@ const VehiculoList = () => {
     navigate(`/vehiculo/edit/${id}`);
   };
 
+  const handleReparacionesVehiculo = (id) => {
+    navigate(`/reparacion/list/${id}`);
+  };
+
+  const handleAnadirReparacion = (id) => {
+    navigate(`/reparacion/add/${id}`);
+  }
+
   return (
     <div
       style={{
@@ -154,6 +162,29 @@ const VehiculoList = () => {
                   >
                     Eliminar
                   </Button>
+
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="small"
+                    onClick={() => handleReparacionesVehiculo(vehiculo.id)}
+                    style={{ marginLeft: "0.5rem" }}
+                    startIcon={<EditIcon />}
+                  >
+                    Reparaciones
+                  </Button>
+
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() => handleAnadirReparacion(vehiculo.id)}
+                    style={{ marginLeft: "0.5rem" }}
+                    startIcon={<EditIcon />}
+                  >
+                    Añadir Reparación
+                  </Button>
+
                 </TableCell>
               </TableRow>
             ))}

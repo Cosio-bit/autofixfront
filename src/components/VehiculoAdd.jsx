@@ -11,9 +11,6 @@ import DropdownTipoVehiculo from './TipoVehiculo.jsx';
 import DropdownTipoMotor from './TipoMotor.jsx';
 
 
-
-
-
 const AddVehiculo = () => {
   const [patente, setPatente] = useState(""); // Patente en lugar de rut, según la entidad
   const [marca, setMarca] = useState("");
@@ -30,7 +27,16 @@ const AddVehiculo = () => {
   const saveVehiculo = (e) => {
     e.preventDefault();
 
-    const vehiculo = { patente, marca, modelo, annoFabricacion, tipoVehiculo, tipoMotor, nroAsientos, kilometraje, id };
+    const vehiculo = { patente,
+      marca,
+      modelo,
+      annoFabricacion,
+      tipoVehiculo,
+      tipoMotor,
+      nroAsientos,
+      kilometraje,
+      id };
+      
     if (id) {
       //Actualizar Datos Empelado
       vehiculoService
