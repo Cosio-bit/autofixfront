@@ -70,53 +70,58 @@ const EditReparacion = () => {
     }
   }, [id]);
 
+  const handleDateChangeIngreso = (date) => {
+    setFechaHoraIngreso(date);
+};
 
-    const handleDateChangeIngreso = (date) => {
-        setFechaHoraIngreso(date);
-    };
+const handleSetCurrentDateTimeIngreso = () => {
+    const currentDateTime = Date.now();
+    setFechaHoraIngreso(currentDateTime);
+};
 
-    const handleSetCurrentDateTimeIngreso = () => {
-        const currentDateTime = new Date();
-        setFechaHoraIngreso(currentDateTime);
-    };
+const handleTimeChangeIngreso = (time) => {
+    const nuevaFechaHoraIngreso = new Date(fechaHoraIngreso); // Crear una nueva fecha a partir de la fecha actual
+    nuevaFechaHoraIngreso.setHours(time.hours());
+    nuevaFechaHoraIngreso.setMinutes(time.minutes());
+    setFechaHoraIngreso(nuevaFechaHoraIngreso); // Establecer la nueva fecha y hora
+};
 
-    const handleTimeChangeIngreso = (time) => {
-        const newDate = fechaHoraIngreso.setHours(time.hours(), time.minutes(), 0, 0);
-        setFechaHoraIngreso(newDate);
-    };
 
-    const handleDateChangeSalida = (date) => {
-        setFechaHoraSalida(date);
-    };
+const handleDateChangeSalida = (date) => {
+    setFechaHoraSalida(date);
+};
 
-    const handleSetCurrentDateTimeSalida = () => {
-        const currentDateTime = new Date();
-        setFechaHoraSalida(currentDateTime);
-    };
+const handleSetCurrentDateTimeSalida = () => {
+    const currentDateTime = Date.now();
+    setFechaHoraSalida(currentDateTime);
+};
 
-    const handleTimeChangeSalida = (time) => {
-        const newDate = fechaHoraSalida.setHours(time.hours(), time.minutes(), 0, 0);
-        setFechaHoraSalida(newDate);
-    };
+const handleTimeChangeSalida = (time) => {
+    const nuevaFechaHoraSalida = new Date(fechaHoraSalida); // Crear una nueva fecha a partir de la fecha actual
+    nuevaFechaHoraSalida.setHours(time.hours());
+    nuevaFechaHoraSalida.setMinutes(time.minutes());
+    setFechaHoraSalida(nuevaFechaHoraSalida); // Establecer la nueva fecha y hora
+};
 
-    const handleDateChangeRetiro = (date) => {
-        setFechaHoraRetiro(date);
-    };
+const handleDateChangeRetiro = (date) => {
+    setFechaHoraRetiro(date);
+};
 
-    const handleSetCurrentDateTimeRetiro = () => {
-        const currentDateTime = new Date();
-        setFechaHoraRetiro(currentDateTime);
-    };
+const handleSetCurrentDateTimeRetiro = () => {
+    const currentDateTime = Date.now();
+    setFechaHoraRetiro(currentDateTime);
+};
 
-    const handleTimeChangeRetiro = (time) => {
-        const newDate = fechaHoraRetiro.setHours(time.hours(), time.minutes(), 0, 0);
-        setFechaHoraRetiro(newDate);
-    };
+const handleTimeChangeRetiro = (time) => {
+    const nuevaFechaHoraRetiro = new Date(fechaHoraRetiro); // Crear una nueva fecha a partir de la fecha actual
+    nuevaFechaHoraRetiro.setHours(time.hours());
+    nuevaFechaHoraRetiro.setMinutes(time.minutes());
+    setFechaHoraRetiro(nuevaFechaHoraRetiro); // Establecer la nueva fecha y hora
+};
 
-    const handleTipoReparacionChange = (tipoReparacion) => {
-        setTipoReparacion(tipoReparacion);
-    }
-
+const handleTipoReparacionChange = (tipoReparacion) => {
+    setTipoReparacion(tipoReparacion);
+}
   
 
   return (

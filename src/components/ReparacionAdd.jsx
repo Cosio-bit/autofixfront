@@ -10,10 +10,12 @@ import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import  DropdownTipoReparacion  from './TipoReparacion';
 
+
+
 const AddReparacion = () => {
     const { idVehiculo } = useParams();
     const [vehiculoId, ] = useState(parseInt(idVehiculo)); // Parse idVehiculo as integer
-    const [fechaHoraIngreso, setFechaHoraIngreso] = useState(new Date());
+    const [fechaHoraIngreso, setFechaHoraIngreso] = useState("");
     const [fechaHoraSalida, setFechaHoraSalida] = useState("");
     const [fechaHoraRetiro, setFechaHoraRetiro] = useState("");
     const [tipoReparacion, setTipoReparacion] = useState("");
@@ -21,6 +23,8 @@ const AddReparacion = () => {
     const [titleReparacionForm, setTitleReparacionForm] = useState("");
     const [id] = useState(0); // According to the entity
     const navigate = useNavigate();
+
+    
 
     const saveReparacion = (e) => {
         e.preventDefault();
@@ -58,27 +62,32 @@ const AddReparacion = () => {
     };
 
     const handleSetCurrentDateTimeIngreso = () => {
-        const currentDateTime = new Date();
+        const currentDateTime = Date.now();
         setFechaHoraIngreso(currentDateTime);
     };
 
     const handleTimeChangeIngreso = (time) => {
-        const newDate = fechaHoraIngreso.setHours(time.hours(), time.minutes(), 0, 0);
-        setFechaHoraIngreso(newDate);
+        const nuevaFechaHoraIngreso= fechaHoraIngreso ? new Date(fechaHoraIngreso) : new Date(Date.now());
+        nuevaFechaHoraIngreso.setHours(time.hours());
+        nuevaFechaHoraIngreso.setMinutes(time.minutes());
+        setFechaHoraIngreso(nuevaFechaHoraIngreso); // Establecer la nueva fecha y hora
     };
+    
 
     const handleDateChangeSalida = (date) => {
         setFechaHoraSalida(date);
     };
 
     const handleSetCurrentDateTimeSalida = () => {
-        const currentDateTime = new Date();
+        const currentDateTime = Date.now();
         setFechaHoraSalida(currentDateTime);
     };
 
     const handleTimeChangeSalida = (time) => {
-        const newDate = fechaHoraSalida.setHours(time.hours(), time.minutes(), 0, 0);
-        setFechaHoraSalida(newDate);
+        const nuevaFechaHoraSalida = fechaHoraSalida ? new Date(fechaHoraSalida) : new Date(Date.now()); // Crear una nueva fecha a partir de la fecha actual
+        nuevaFechaHoraSalida.setHours(time.hours());
+        nuevaFechaHoraSalida.setMinutes(time.minutes());
+        setFechaHoraSalida(nuevaFechaHoraSalida); // Establecer la nueva fecha y hora
     };
 
     const handleDateChangeRetiro = (date) => {
@@ -86,13 +95,15 @@ const AddReparacion = () => {
     };
 
     const handleSetCurrentDateTimeRetiro = () => {
-        const currentDateTime = new Date();
+        const currentDateTime = Date.now();
         setFechaHoraRetiro(currentDateTime);
     };
 
     const handleTimeChangeRetiro = (time) => {
-        const newDate = fechaHoraRetiro.setHours(time.hours(), time.minutes(), 0, 0);
-        setFechaHoraRetiro(newDate);
+        const nuevaFechaHoraRetiro = fechaHoraRetiro ? new Date(fechaHoraRetiro) : new Date(Date.now()); // Crear una nueva fecha a partir de la fecha actual
+        nuevaFechaHoraRetiro.setHours(time.hours());
+        nuevaFechaHoraRetiro.setMinutes(time.minutes());
+        setFechaHoraRetiro(nuevaFechaHoraRetiro); // Establecer la nueva fecha y hora
     };
 
     const handleTipoReparacionChange = (tipoReparacion) => {
@@ -177,6 +188,7 @@ const AddReparacion = () => {
                 </div>
             </div>
         </FormControl>
+        
 
         <FormControl fullWidth>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>

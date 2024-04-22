@@ -12,19 +12,23 @@ import Button from "@mui/material/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useParams } from "react-router-dom";
 
 // URL de la imagen de Internet
 const backgroundImageUrl = "https://imgs.search.brave.com/2s2NZU7sv94_N-AIsDMpNQ_9VQLAIjYqll8aUf5tE_I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9yZXRy/by1yZWQtY2FyLXN5/bnRod2F2ZS1wb3N0/ZXItdmFwb3J3YXZl/LXN1bnNldC1uZW9u/LWdyYWRpZW50LWJh/Y2tncm91bmQtcmV0/cm8tcmVkLWNhci1z/eW50aHdhdmUtcG9z/dGVyLXZhcG9yd2F2/ZS0yNjIwNDgzMDAu/anBn";
 // eslint-disable-next-line react/prop-types
-const ReparacionList = ({ idVehiculo }) => {
+const ReparacionList = () => {
   const [reparaciones, setReparaciones] = useState([]);
+  const { idVehiculo } = useParams();
   const navigate = useNavigate();
 
   const init = () => {
     if (idVehiculo) {
+      console.log("Printing idVehiculo", idVehiculo);
       reparacionService
         .getFromVehiculo(idVehiculo)
         .then((response) => {
+          console.log("Printing idVehiculo", idVehiculo);
           console.log("Mostrando listado de todas las reparaciones de un vehiculo.", response.data);
           setReparaciones(response.data);
         })
@@ -76,9 +80,9 @@ const ReparacionList = ({ idVehiculo }) => {
     }
   };
 
-  const handleEdit = (idVehiculo, id) => {
+  const handleEdit = (id) => {
     console.log("Printing id", id);
-    navigate(`/reparacion/edit/${idVehiculo}/${id}`);
+    navigate(`/reparacion/edit/${id}`);
   };
 
   return (
