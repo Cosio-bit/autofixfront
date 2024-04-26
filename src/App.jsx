@@ -7,6 +7,8 @@ import VehiculoAdd from './components/VehiculoAdd';
 import ReparacionAdd from './components/ReparacionAdd';
 import ReparacionList from './components/ReparacionList';
 import ReparacionEdit from './components/ReparacionEdit';
+import MarcaList from './components/MarcaList';
+import MarcaAdd from './components/MarcaAdd';
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
               <Route path="/reparacion/add" element={<ReparacionAdd/>} />
               <Route path="/reparacion/add/:idVehiculo" element={<ReparacionAdd/>} />
               <Route path="/reparacion/edit/:id" element={<ReparacionEdit/>} />
+              <Route path="/marca/list" element={<MarcaList/>} />
+              <Route path="/marca/add" element={<MarcaAdd/>} />
               
             </Routes>
           </div>

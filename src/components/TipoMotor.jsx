@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 // eslint-disable-next-line react/prop-types
 function DropdownTipoMotor({ onChange }) {
   const [selectedOption, setSelectedOption] = useState('');
-  const [options,] = useState(["opcion1", "opcion2", "opcion3"]);
+  const [options,] = useState(["Gasolina", "Diésel", "Híbrido", "Eléctrico"]);
   const [, setTipoMotor] = useState('');
 
   const handleChange = (event) => {

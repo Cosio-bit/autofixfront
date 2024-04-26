@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 // eslint-disable-next-line react/prop-types
 function DropdownTipoVehiculo({onChange }) {
   const [selectedOption, setSelectedOption] = useState('');
-  const [options, ] = useState(["opcion1", "opcion2", "opcion3"]);
+  const [options, ] = useState(["Sedan", "Hatchback", "SUV", "Pickup", "Furgoneta"]);
   const [, setTipoVehiculo] = useState('');
 
   const handleChange = (event) => {

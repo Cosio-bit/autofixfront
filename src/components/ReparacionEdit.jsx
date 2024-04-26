@@ -122,6 +122,10 @@ const handleTimeChangeRetiro = (time) => {
 const handleTipoReparacionChange = (tipoReparacion) => {
     setTipoReparacion(tipoReparacion);
 }
+
+const handleCalcularMonto = () => {
+  
+}
   
 
   return (
@@ -248,6 +252,7 @@ const handleTipoReparacionChange = (tipoReparacion) => {
         <DropdownTipoReparacion onChange={handleTipoReparacionChange} />
 
         <FormControl fullWidth>
+          <div >
             <TextField
             id="montoTotal"
             label="Monto Total"
@@ -258,6 +263,12 @@ const handleTipoReparacionChange = (tipoReparacion) => {
             InputLabelProps={{ style: { color: "#f0f0f0" } }}
             InputProps={{ style: { color: "#f0f0f0" } }}
             />
+          </div>
+          <div>
+          <Button variant="contained" color="primary" onClick={handleCalcularMonto}>
+                Calcular Monto
+          </Button>
+          </div>
         </FormControl>
 
         <FormControl>
