@@ -61,11 +61,6 @@ const AddReparacion = () => {
         setFechaHoraIngreso(date);
     };
 
-    const handleSetCurrentDateTimeIngreso = () => {
-        const currentDateTime = Date.now();
-        setFechaHoraIngreso(currentDateTime);
-    };
-
     const handleTimeChangeIngreso = (time) => {
         const nuevaFechaHoraIngreso= fechaHoraIngreso ? new Date(fechaHoraIngreso) : new Date(Date.now());
         nuevaFechaHoraIngreso.setHours(time.hours());
@@ -76,11 +71,6 @@ const AddReparacion = () => {
 
     const handleDateChangeSalida = (date) => {
         setFechaHoraSalida(date);
-    };
-
-    const handleSetCurrentDateTimeSalida = () => {
-        const currentDateTime = Date.now();
-        setFechaHoraSalida(currentDateTime);
     };
 
     const handleTimeChangeSalida = (time) => {
@@ -94,10 +84,6 @@ const AddReparacion = () => {
         setFechaHoraRetiro(date);
     };
 
-    const handleSetCurrentDateTimeRetiro = () => {
-        const currentDateTime = Date.now();
-        setFechaHoraRetiro(currentDateTime);
-    };
 
     const handleTimeChangeRetiro = (time) => {
         const nuevaFechaHoraRetiro = fechaHoraRetiro ? new Date(fechaHoraRetiro) : new Date(Date.now()); // Crear una nueva fecha a partir de la fecha actual
@@ -151,11 +137,7 @@ const AddReparacion = () => {
                         locale="es"
                     />
                 </div>
-                <div>
-                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeIngreso}>
-                        Establecer actual
-                    </Button>
-                </div>
+               
             </div>
         </FormControl>
 
@@ -181,11 +163,7 @@ const AddReparacion = () => {
                         locale="es"
                     />
                 </div>
-                <div>
-                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeSalida}>
-                        Establecer actual
-                    </Button>
-                </div>
+            
             </div>
         </FormControl>
         
@@ -212,11 +190,7 @@ const AddReparacion = () => {
                         locale="es"
                     />
                 </div>
-                <div>
-                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeRetiro}>
-                        Establecer actual
-                    </Button>
-                </div>
+               
             </div>
         </FormControl>
 

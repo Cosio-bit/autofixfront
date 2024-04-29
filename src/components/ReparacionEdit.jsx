@@ -37,8 +37,10 @@ const EditReparacion = () => {
 
     if (id) {
       //Actualizar Datos
-      reparacionService
-        .update(reparacion)
+      Promise.all([
+        reparacionService.update(reparacion), // Update repair data
+        reparacionService.updateMonto(reparacion) // Update repair's total amount
+      ])
         .then((response) => {
           console.log("reparacion ha sido actualizado.", response.data);
           navigate("/reparacion/list");
@@ -51,6 +53,8 @@ const EditReparacion = () => {
         });
     }
   };
+
+  
   useEffect(() => {
     if (id) {
       setTitleReparacionForm("Editar reparacion");
@@ -74,10 +78,6 @@ const EditReparacion = () => {
     setFechaHoraIngreso(date);
 };
 
-const handleSetCurrentDateTimeIngreso = () => {
-    const currentDateTime = Date.now();
-    setFechaHoraIngreso(currentDateTime);
-};
 
 const handleTimeChangeIngreso = (time) => {
     const nuevaFechaHoraIngreso = new Date(fechaHoraIngreso); // Crear una nueva fecha a partir de la fecha actual
@@ -91,10 +91,6 @@ const handleDateChangeSalida = (date) => {
     setFechaHoraSalida(date);
 };
 
-const handleSetCurrentDateTimeSalida = () => {
-    const currentDateTime = Date.now();
-    setFechaHoraSalida(currentDateTime);
-};
 
 const handleTimeChangeSalida = (time) => {
     const nuevaFechaHoraSalida = new Date(fechaHoraSalida); // Crear una nueva fecha a partir de la fecha actual
@@ -107,10 +103,6 @@ const handleDateChangeRetiro = (date) => {
     setFechaHoraRetiro(date);
 };
 
-const handleSetCurrentDateTimeRetiro = () => {
-    const currentDateTime = Date.now();
-    setFechaHoraRetiro(currentDateTime);
-};
 
 const handleTimeChangeRetiro = (time) => {
     const nuevaFechaHoraRetiro = new Date(fechaHoraRetiro); // Crear una nueva fecha a partir de la fecha actual
@@ -123,9 +115,6 @@ const handleTipoReparacionChange = (tipoReparacion) => {
     setTipoReparacion(tipoReparacion);
 }
 
-const handleCalcularMonto = () => {
-  
-}
   
 
   return (
@@ -181,11 +170,7 @@ const handleCalcularMonto = () => {
                         locale="es"
                     />
                 </div>
-                <div>
-                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeIngreso}>
-                        Establecer actual
-                    </Button>
-                </div>
+              
             </div>
         </FormControl>
 
@@ -211,11 +196,7 @@ const handleCalcularMonto = () => {
                         locale="es"
                     />
                 </div>
-                <div>
-                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeSalida}>
-                        Establecer actual
-                    </Button>
-                </div>
+               
             </div>
         </FormControl>
 
@@ -241,11 +222,7 @@ const handleCalcularMonto = () => {
                         locale="es"
                     />
                 </div>
-                <div>
-                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeRetiro}>
-                        Establecer actual
-                    </Button>
-                </div>
+                
             </div>
         </FormControl>
 
@@ -264,12 +241,8 @@ const handleCalcularMonto = () => {
             InputProps={{ style: { color: "#f0f0f0" } }}
             />
           </div>
-          <div>
-          <Button variant="contained" color="primary" onClick={handleCalcularMonto}>
-                Calcular Monto
-          </Button>
-          </div>
         </FormControl>
+
 
         <FormControl>
           <br />

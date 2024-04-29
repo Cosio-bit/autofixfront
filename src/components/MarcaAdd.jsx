@@ -88,10 +88,6 @@ const AddMarca = () => {
     setFechaBono(date);
 };
 
-const handleSetCurrentDateTimeBono = () => {
-    const currentDateTime = Date.now();
-    setFechaBono(currentDateTime);
-};
 
 
   return (
@@ -126,11 +122,6 @@ const handleSetCurrentDateTimeBono = () => {
                         timeFormat={false}
                         locale="es"
                     />
-                </div>
-                <div>
-                    <Button variant="contained" color="primary" onClick={handleSetCurrentDateTimeBono}>
-                        Establecer actual
-                    </Button>
                 </div>
             </div>
         </FormControl>

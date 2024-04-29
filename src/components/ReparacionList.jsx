@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import reparacionService from "../services/reparacion.service";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,7 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useParams } from "react-router-dom";
@@ -95,18 +94,7 @@ const ReparacionList = () => {
     >
       <TableContainer component={Paper} style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}>
         <br />
-        <Link
-          to="/reparacion/add"
-          style={{ textDecoration: "none", marginBottom: "1rem" }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<PersonAddIcon />}
-          >
-            Añadir Reparacion
-          </Button>
-        </Link>
+       
         <br /> <br />
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>

@@ -24,17 +24,17 @@ function DropdownTipoReparacion({onChange}) {
           style: { color: "#f0f0f0" }
         }}
       >
-        <MenuItem value="1">Reparaciones del Sistema de Frenos</MenuItem>
-        <MenuItem value="2">Servicio del Sistema de Refrigeración</MenuItem>
-        <MenuItem value="3">Reparaciones del Motor</MenuItem>
-        <MenuItem value="4">Reparaciones de la Transmisión</MenuItem>
-        <MenuItem value="5">Reparación del Sistema Eléctrico</MenuItem>
-        <MenuItem value="6">Reparaciones del Sistema de Escape</MenuItem>
-        <MenuItem value="7">Reparación de Neumáticos y Ruedas</MenuItem>
-        <MenuItem value="8">Reparaciones de la Suspensión y la Dirección</MenuItem>
-        <MenuItem value="9">Reparación del Sistema de Aire Acondicionado y Calefacción</MenuItem>
-        <MenuItem value="10">Reparaciones del Sistema de Combustible</MenuItem>
-        <MenuItem value="11">Reparación y Reemplazo del Parabrisas y Cristales</MenuItem>
+        <MenuItem value="0">Reparaciones del Sistema de Frenos</MenuItem>
+        <MenuItem value="1">Servicio del Sistema de Refrigeración</MenuItem>
+        <MenuItem value="2">Reparaciones del Motor</MenuItem>
+        <MenuItem value="3">Reparaciones de la Transmisión</MenuItem>
+        <MenuItem value="4">Reparación del Sistema Eléctrico</MenuItem>
+        <MenuItem value="5">Reparaciones del Sistema de Escape</MenuItem>
+        <MenuItem value="6">Reparación de Neumáticos y Ruedas</MenuItem>
+        <MenuItem value="7">Reparaciones de la Suspensión y la Dirección</MenuItem>
+        <MenuItem value="8">Reparación del Sistema de Aire Acondicionado y Calefacción</MenuItem>
+        <MenuItem value="9">Reparaciones del Sistema de Combustible</MenuItem>
+        <MenuItem value="10">Reparación y Reemplazo del Parabrisas y Cristales</MenuItem>
       </Select>
     </FormControl>
   );

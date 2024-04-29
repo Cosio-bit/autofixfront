@@ -16,9 +16,8 @@ const get = id => {
     return httpClient.get(`/api/v1/reparaciones/reparacion/${id}`);
 }
 
-
-const updateMonto = (id) => {
-    return httpClient.put(`/api/v1/reparaciones/reparacion/${id}/monto`);
+const updateMonto = data => {
+    return httpClient.put('/api/v1/reparaciones/reparacion/monto', data);
 }
 
 const update = data => {
@@ -28,4 +27,4 @@ const update = data => {
 const remove = id => {
     return httpClient.delete(`/api/v1/reparaciones/reparacion/${id}`);
 }
-export default { getAll, create, getFromVehiculo, get, updateMonto, update, remove };
+export default { getAll, create, getFromVehiculo, get, updateMonto,  update, remove };
