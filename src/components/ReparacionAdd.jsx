@@ -98,7 +98,7 @@ const AddReparacion = () => {
         setTipoReparacion(tipoReparacion);
     }
 
-  return (  <Box
+  return (   <Box
     display="flex"
     flexDirection="column"
     alignItems="center"
@@ -115,35 +115,39 @@ const AddReparacion = () => {
     <hr style={{ width: "100%", border: "none", borderBottom: "1px solid black", marginBottom: "20px" }} />
       <hr />
       <form>
-
-        <FormControl fullWidth>
-            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                <div style={{ flex: '1' }}>
-                    <Datetime
-                        inputProps={{ style: { color: "#f0f0f0" } }}
-                        value={fechaHoraIngreso}
-                        onChange={handleDateChangeIngreso}
-                        dateFormat="YYYY-MM-DD"
-                        timeFormat={false}
-                        locale="es"
-                    />
-                </div>
-                <div>
-                    <Datetime
-                        inputProps={{ style: { color: "#f0f0f0" } }}
-                        value={fechaHoraIngreso}
-                        onChange={handleTimeChangeIngreso}
-                        dateFormat={false}
-                        timeFormat="HH:mm"
-                        locale="es"
-                    />
-                </div>
-               
+    <FormControl fullWidth>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+        <h2 style={{ color: '#333', margin: '0' }}>Fecha de Ingreso</h2>
+            <div style={{ flex: '1' }}>
+                <Datetime
+                    inputProps={{ style: { color: "#f0f0f0" } }}
+                    value={fechaHoraIngreso}
+                    onChange={handleDateChangeIngreso}
+                    dateFormat="YYYY-MM-DD"
+                    timeFormat={false}
+                    locale="es"
+                />
             </div>
-        </FormControl>
+            
+            <div>
+                <Datetime
+                    inputProps={{ style: { color: "#f0f0f0" } }}
+                    value={fechaHoraIngreso}
+                    onChange={handleTimeChangeIngreso}
+                    dateFormat={false}
+                    timeFormat="HH:mm"
+                    locale="es"
+                />
+            </div>
+        </div>
+    </div>
+</FormControl>
 
         <FormControl fullWidth>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <h2 style={{ color: '#333', margin: '0' }}>Fecha de Salida</h2>
                 <div style={{ flex: '1' }}>
                     <Datetime
                         inputProps={{ style: { color: "#f0f0f0" } }}
@@ -171,6 +175,7 @@ const AddReparacion = () => {
 
         <FormControl fullWidth>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <h2 style={{ color: '#333', margin: '0' }}>Fecha de Retiro</h2>
                 <div style={{ flex: '1' }}>
                     <Datetime
                         inputProps={{ style: { color: "#f0f0f0" } }}

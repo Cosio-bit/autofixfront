@@ -9,8 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useParams } from "react-router-dom";
 
 // URL de la imagen de Internet
@@ -18,41 +16,26 @@ const backgroundImageUrl = "https://imgs.search.brave.com/2s2NZU7sv94_N-AIsDMpNQ
 // eslint-disable-next-line react/prop-types
 const ReparacionList = () => {
   const [reparaciones, setReparaciones] = useState([]);
-  const { idVehiculo, marca } = useParams();
+  const { tipoVehiculo } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    init(marca); // Pasamos el parámetro marca cuando está presente
-  }, [idVehiculo, marca]); // Dependencias del efecto
+    init(tipoVehiculo); // Pasamos el parámetro tipoVehiculo cuando está presente
+  }, [tipoVehiculo]); // Dependencias del efecto
   
   const init = () => {
-    //si es numero entonces es idVehiculo, si no es marca
+    //si es numero entonces es idVehiculo, si no es tipoVehiculo
     
-    if (idVehiculo) {
-      console.log("Printing idVehiculo", idVehiculo);
+      if (tipoVehiculo) {
       reparacionService
-        .getFromVehiculo(idVehiculo)
+        .getByTipoVehiculo(tipoVehiculo)
         .then((response) => {
-          console.log("Printing idVehiculo", idVehiculo);
-          console.log("Mostrando listado de todas las reparaciones de un vehiculo.", response.data);
+          console.log(`Mostrando listado de todas las reparaciones de la tipoVehiculo ${tipoVehiculo}.`, response.data);
           setReparaciones(response.data);
         })
         .catch((error) => {
           console.error(
-            "Se ha producido un error al intentar mostrar listado de todas las reparaciones de un vehiculo.",
-            error
-          );
-        });
-    } else if (marca) {
-      reparacionService
-        .getByMarca(marca)
-        .then((response) => {
-          console.log(`Mostrando listado de todas las reparaciones de la marca ${marca}.`, response.data);
-          setReparaciones(response.data);
-        })
-        .catch((error) => {
-          console.error(
-            `Se ha producido un error al intentar mostrar listado de todas las reparaciones de la marca ${marca}.`,
+            `Se ha producido un error al intentar mostrar listado de todas las reparaciones de la tipoVehiculo ${tipoVehiculo}.`,
             error
           );
         });
@@ -71,34 +54,13 @@ const ReparacionList = () => {
         });
     }
   };
-  
 
-  const handleDelete = (id) => {
-    console.log("Printing id", id);
-    const confirmDelete = window.confirm(
-      "¿Está seguro que desea borrar esta reparación?"
-    );
-    if (confirmDelete) {
-      reparacionService
-        .remove(id)
-        .then((response) => {
-          console.log("Reparación ha sido eliminada.", response.data);
-          init(marca); // Aquí deberías pasar 'marca' como argumento
-        })
-        .catch((error) => {
-          console.log(
-            "Se ha producido un error al intentar eliminar la reparación",
-            error
-          );
-        });
-    }
-  };
-  
-  
-
-  const handleEdit = (id) => {
-    console.log("Printing id", id);
-    navigate(`/reparacion/edit/${id}`);
+  const calcularMontoTotalAcomulado = (reparacionesData) => {
+    let sumaMontos = 0;
+    reparacionesData.forEach((reparacion) => {
+      sumaMontos += reparacion.montoTotal;
+    });
+    return sumaMontos; // Retorna la suma de montos
   };
 
   return (
@@ -111,28 +73,26 @@ const ReparacionList = () => {
     >
       <TableContainer component={Paper} style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}>
         <br />
-       
-        <br /> <br />
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              fechaHoraIngreso
+                fechaHoraIngreso
               </TableCell>
               <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              tipoReparacion
+                tipoReparacion
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              montoTotal
+                montoTotal
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              fechaHoraSalida
+                fechaHoraSalida
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              fechaHoraRetiro
+                fechaHoraRetiro
               </TableCell>
               <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              idVehiculo
+                idVehiculo
               </TableCell>
             </TableRow>
           </TableHead>
@@ -148,31 +108,18 @@ const ReparacionList = () => {
                 <TableCell align="left">{reparacion.fechaHoraSalida}</TableCell>
                 <TableCell align="left">{reparacion.fechaHoraRetiro}</TableCell>
                 <TableCell align="left">{reparacion.idVehiculo}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="info"
-                    size="small"
-                    onClick={() => handleEdit(reparacion.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<EditIcon />}
-                  >
-                    Editar
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    color="error"
-                    size="small"
-                    onClick={() => handleDelete(reparacion.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<DeleteIcon />}
-                  >
-                    Eliminar
-                  </Button>
-                </TableCell>
               </TableRow>
             ))}
+          </TableBody>
+          <TableBody>
+            <TableRow>
+              <TableCell align="right" colSpan={6} sx={{ fontWeight: "bold" }}>
+                Monto Total Acumulado:
+              </TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {calcularMontoTotalAcomulado(reparaciones)}
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
         <Button
@@ -185,7 +132,6 @@ const ReparacionList = () => {
         </Button>
       </TableContainer>
     </div>
-
   );
 };
 

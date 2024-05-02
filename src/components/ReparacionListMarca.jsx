@@ -9,31 +9,33 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useParams } from "react-router-dom";
 
 // URL de la imagen de Internet
 const backgroundImageUrl = "https://imgs.search.brave.com/2s2NZU7sv94_N-AIsDMpNQ_9VQLAIjYqll8aUf5tE_I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9yZXRy/by1yZWQtY2FyLXN5/bnRod2F2ZS1wb3N0/ZXItdmFwb3J3YXZl/LXN1bnNldC1uZW9u/LWdyYWRpZW50LWJh/Y2tncm91bmQtcmV0/cm8tcmVkLWNhci1z/eW50aHdhdmUtcG9z/dGVyLXZhcG9yd2F2/ZS0yNjIwNDgzMDAu/anBn";
 // eslint-disable-next-line react/prop-types
-const ReparacionListMarca = () => {
+const ReparacionList = () => {
   const [reparaciones, setReparaciones] = useState([]);
   const { marca } = useParams();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    init(marca); // Pasamos el parámetro marca cuando está presente
+  }, [marca]); // Dependencias del efecto
+  
   const init = () => {
-    if (marca) {
-      console.log("Printing marca", marca);
+    //si es numero entonces es idVehiculo, si no es marca
+    
+      if (marca) {
       reparacionService
-        .getMarca(marca)
+        .getByMarca(marca)
         .then((response) => {
-          console.log("Printing marca", marca);
-          console.log("Mostrando listado de todas las reparaciones de un vehiculo.", response.data);
+          console.log(`Mostrando listado de todas las reparaciones de la marca ${marca}.`, response.data);
           setReparaciones(response.data);
         })
         .catch((error) => {
           console.error(
-            "Se ha producido un error al intentar mostrar listado de todas las reparaciones de un vehiculo.",
+            `Se ha producido un error al intentar mostrar listado de todas las reparaciones de la marca ${marca}.`,
             error
           );
         });
@@ -52,37 +54,33 @@ const ReparacionListMarca = () => {
         });
     }
   };
-
-  useEffect(() => {
-    init();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marca]); // Ejecutar init() cuando idVehiculo cambie
-
-  const handleDelete = (id) => {
-    console.log("Printing id", id);
-    const confirmDelete = window.confirm(
-      "¿Esta seguro que desea borrar este reparacion?"
-    );
-    if (confirmDelete) {
-      reparacionService
-        .remove(id)
-        .then((response) => {
-          console.log("reparacion ha sido eliminado.", response.data);
-          init();
-        })
-        .catch((error) => {
-          console.log(
-            "Se ha producido un error al intentar eliminar al reparacion",
-            error
-          );
-        });
-    }
+  const calcularTiempoPromedio = (reparacionesData) => {
+    let sumaTiempos = 0;
+    reparacionesData.forEach((reparacion) => {
+      if (reparacion.fechaHoraSalida && reparacion.fechaHoraIngreso) {
+        sumaTiempos += new Date(reparacion.fechaHoraSalida) - new Date(reparacion.fechaHoraIngreso);
+      }
+    });
+    const totalReparaciones = reparacionesData.length;
+    const tiempoPromedio = totalReparaciones > 0 ? sumaTiempos / totalReparaciones : 0;
+    return tiempoPromedio;
   };
+  
 
-  const handleEdit = (id) => {
-    console.log("Printing id", id);
-    navigate(`/reparacion/edit/${id}`);
+   // Función para formatear el tiempo neto
+   const formatTiempoNeto = (tiempoNeto) => {
+    const dias = Math.floor(tiempoNeto / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((tiempoNeto % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((tiempoNeto % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((tiempoNeto % (1000 * 60)) / 1000);
+    let tiempoFormateado = '';
+    if (dias > 0) tiempoFormateado += dias + " días ";
+    if (horas > 0) tiempoFormateado += horas + " horas ";
+    if (minutos > 0) tiempoFormateado += minutos + " minutos ";
+    if (segundos > 0) tiempoFormateado += segundos + " segundos ";
+    return tiempoFormateado;
   };
+  
 
   return (
     <div
@@ -114,9 +112,13 @@ const ReparacionListMarca = () => {
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
               fechaHoraRetiro
               </TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                Tiempo Neto
+              </TableCell>
               <TableCell align="left" sx={{ fontWeight: "bold" }}>
               idVehiculo
               </TableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -130,36 +132,29 @@ const ReparacionListMarca = () => {
                 <TableCell align="left">{reparacion.montoTotal}</TableCell>
                 <TableCell align="left">{reparacion.fechaHoraSalida}</TableCell>
                 <TableCell align="left">{reparacion.fechaHoraRetiro}</TableCell>
-                <TableCell align="left">{reparacion.idVehiculo}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="info"
-                    size="small"
-                    onClick={() => handleEdit(reparacion.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<EditIcon />}
-                  >
-                    Editar
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    color="error"
-                    size="small"
-                    onClick={() => handleDelete(reparacion.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<DeleteIcon />}
-                  >
-                    Eliminar
-                  </Button>
+                <TableCell align="right">
+                  {reparacion.fechaHoraSalida && reparacion.fechaHoraIngreso ?
+                    formatTiempoNeto(new Date(reparacion.fechaHoraSalida) - new Date(reparacion.fechaHoraIngreso)) 
+                    : null
+                  }
                 </TableCell>
+                <TableCell align="left">{reparacion.idVehiculo}</TableCell>
+                
               </TableRow>
             ))}
           </TableBody>
+          <TableBody>
+            <TableRow>
+              <TableCell align="right" colSpan={6} sx={{ fontWeight: "bold" }}>
+                Tiempo Promedio:
+              </TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {formatTiempoNeto(calcularTiempoPromedio(reparaciones))}
+              </TableCell>
+            </TableRow>
+          </TableBody>
         </Table>
-      </TableContainer>
-      <Button
+        <Button
           variant="contained"
           color="primary"
           onClick={() => navigate("/vehiculo/list")}
@@ -167,10 +162,9 @@ const ReparacionListMarca = () => {
         >
           Lista de Vehiculos
         </Button>
-        
+      </TableContainer>
     </div>
-
   );
 };
 
-export default ReparacionListMarca;
+export default ReparacionList;

@@ -9,6 +9,9 @@ import ReparacionList from './components/ReparacionList';
 import ReparacionEdit from './components/ReparacionEdit';
 import MarcaList from './components/MarcaList';
 import MarcaAdd from './components/MarcaAdd';
+import ReparacionListMarca from './components/ReparacionListMarca';
+import ReparacionListTipoMotor from './components/ReparacionListTipoMotor';
+import ReparacionListTipoVehiculo from './components/ReparacionListTipoVehiculo';
 
 
 function App() {
@@ -29,7 +32,9 @@ function App() {
               <Route path="/marca/list" element={<MarcaList/>} />
               <Route path="/marca/add" element={<MarcaAdd/>} />
               <Route path="/marca/edit/:id" element={<MarcaAdd/>} />
-              <Route path="/reparacion/list/:marca" element={<ReparacionList/>} />
+              <Route path="/reparacion/list/marca/:marca" element={<ReparacionListMarca/>} />
+              <Route path="/reparacion/list/tipoMotor/:tipoMotor" element={<ReparacionListTipoMotor/>} />
+              <Route path="/reparacion/list/tipoVehiculo/:tipoVehiculo" element={<ReparacionListTipoVehiculo/>} />
               
             </Routes>
           </div>

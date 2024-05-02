@@ -12,6 +12,9 @@ import Button from "@mui/material/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DropdownTipoMarca from "./TipoMarca";
+import DropdownTipoMotor from "./TipoMotor";
+import DropdownTipoVehiculo from "./TipoVehiculo";
 
 // URL de la imagen de Internet
 const backgroundImageUrl = "https://imgs.search.brave.com/2s2NZU7sv94_N-AIsDMpNQ_9VQLAIjYqll8aUf5tE_I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9yZXRy/by1yZWQtY2FyLXN5/bnRod2F2ZS1wb3N0/ZXItdmFwb3J3YXZl/LXN1bnNldC1uZW9u/LWdyYWRpZW50LWJh/Y2tncm91bmQtcmV0/cm8tcmVkLWNhci1z/eW50aHdhdmUtcG9z/dGVyLXZhcG9yd2F2/ZS0yNjIwNDgzMDAu/anBn";
@@ -71,7 +74,15 @@ const VehiculoList = () => {
   };
 
   const handleReparacionesMarca = (marca) => {
-    navigate(`/reparacion/list/${marca}`);
+    navigate(`/reparacion/list/marca/${marca}`);
+  };
+
+  const handleReparacionesTipoMotor = (tipoMotor) => {
+    navigate(`/reparacion/list/tipoMotor/${tipoMotor}`);
+  };
+
+  const handleReparacionesTipoVehiculo = (tipoVehiculo) => {
+    navigate(`/reparacion/list/tipoVehiculo/${tipoVehiculo}`);
   };
 
   const handleAnadirReparacion = (id) => {
@@ -203,14 +214,34 @@ const VehiculoList = () => {
           Lista de Reparaciones
         </Button>
 
-
+        <DropdownTipoMarca onChange={handleReparacionesMarca} />
         <Button
           variant="contained"
           color="primary"
-          onClick={() => handleReparacionesMarca("Toyota")}
+          onClick={() => handleReparacionesMarca}
           style={{ marginLeft: "0.5rem" }}
         >
-          Reparaciones Toyota
+          Elegir marca de vehiculo para ver reparaciones
+        </Button>
+
+        <DropdownTipoMotor onChange={handleReparacionesTipoMotor} />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleReparacionesTipoMotor}
+          style={{ marginLeft: "0.5rem" }}
+        >
+          Elegir tipo de motor para ver reparaciones
+        </Button>
+
+        <DropdownTipoVehiculo onChange={handleReparacionesTipoVehiculo} />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleReparacionesTipoVehiculo}
+          style={{ marginLeft: "0.5rem" }}
+        >
+          Elegir tipo de vehiculo para ver reparaciones
         </Button>
 
       </TableContainer>

@@ -176,6 +176,7 @@ const handleTipoReparacionChange = (tipoReparacion) => {
 
         <FormControl fullWidth>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <h2 style={{ color: '#333', margin: '0' }}>Fecha de Ingreso</h2>
                 <div style={{ flex: '1' }}>
                     <Datetime
                         inputProps={{ style: { color: "#f0f0f0" } }}
@@ -202,6 +203,7 @@ const handleTipoReparacionChange = (tipoReparacion) => {
 
         <FormControl fullWidth>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <h2 style={{ color: '#333', margin: '0' }}>Fecha de Salida</h2>
                 <div style={{ flex: '1' }}>
                     <Datetime
                        inputProps={{ style: { color: "#f0f0f0" } }}
@@ -228,6 +230,7 @@ const handleTipoReparacionChange = (tipoReparacion) => {
 
         <FormControl fullWidth>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <h2 style={{ color: '#333', margin: '0' }}>Fecha de Retiro</h2>
                 <div style={{ flex: '1' }}>
                     <Datetime
                         inputProps={{ style: { color: "#f0f0f0" } }}

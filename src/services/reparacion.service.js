@@ -17,8 +17,16 @@ const get = id => {
 }
 
 const getByMarca = (marca) => {
-    return httpClient.get(`/reparaciones/marca/${marca}`);
+    return httpClient.get(`/api/v1/reparaciones/marca/${marca}`);
   };
+
+const getByTipoMotor = (tipoMotor) => {
+    return httpClient.get(`/api/v1/reparaciones/tipoMotor/${tipoMotor}`);
+};
+
+const getByTipoVehiculo = (tipoVehiculo) => {
+    return httpClient.get(`/api/v1/reparaciones/tipoVehiculo/${tipoVehiculo}`);
+};
 
 const updateMonto = data => {
     return httpClient.put('/api/v1/reparaciones/reparacion/monto', data);
@@ -32,4 +40,4 @@ const update = data => {
 const remove = id => {
     return httpClient.delete(`/api/v1/reparaciones/reparacion/${id}`);
 }
-export default { getAll, create, getFromVehiculo, get,getByMarca, updateMonto,  update, remove };
+export default { getAll, create, getFromVehiculo, get,getByMarca, getByTipoMotor, getByTipoVehiculo, updateMonto,  update, remove };
