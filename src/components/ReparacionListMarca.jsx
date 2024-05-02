@@ -16,37 +16,24 @@ import { useParams } from "react-router-dom";
 // URL de la imagen de Internet
 const backgroundImageUrl = "https://imgs.search.brave.com/2s2NZU7sv94_N-AIsDMpNQ_9VQLAIjYqll8aUf5tE_I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9yZXRy/by1yZWQtY2FyLXN5/bnRod2F2ZS1wb3N0/ZXItdmFwb3J3YXZl/LXN1bnNldC1uZW9u/LWdyYWRpZW50LWJh/Y2tncm91bmQtcmV0/cm8tcmVkLWNhci1z/eW50aHdhdmUtcG9z/dGVyLXZhcG9yd2F2/ZS0yNjIwNDgzMDAu/anBn";
 // eslint-disable-next-line react/prop-types
-const ReparacionList = () => {
+const ReparacionListMarca = () => {
   const [reparaciones, setReparaciones] = useState([]);
-  const { idVehiculo, marca } = useParams();
+  const { marca } = useParams();
   const navigate = useNavigate();
 
-  const init = (marca) => {
-    if (idVehiculo) {
-      console.log("Printing idVehiculo", idVehiculo);
+  const init = () => {
+    if (marca) {
+      console.log("Printing marca", marca);
       reparacionService
-        .getFromVehiculo(idVehiculo)
+        .getMarca(marca)
         .then((response) => {
-          console.log("Printing idVehiculo", idVehiculo);
+          console.log("Printing marca", marca);
           console.log("Mostrando listado de todas las reparaciones de un vehiculo.", response.data);
           setReparaciones(response.data);
         })
         .catch((error) => {
           console.error(
             "Se ha producido un error al intentar mostrar listado de todas las reparaciones de un vehiculo.",
-            error
-          );
-        });
-    } else if (marca) {
-      reparacionService
-        .getByMarca(marca)
-        .then((response) => {
-          console.log(`Mostrando listado de todas las reparaciones de la marca ${marca}.`, response.data);
-          setReparaciones(response.data);
-        })
-        .catch((error) => {
-          console.error(
-            `Se ha producido un error al intentar mostrar listado de todas las reparaciones de la marca ${marca}.`,
             error
           );
         });
@@ -67,10 +54,9 @@ const ReparacionList = () => {
   };
 
   useEffect(() => {
-    init(marca);
-  }, [idVehiculo, marca]);
-  
-
+    init();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marca]); // Ejecutar init() cuando idVehiculo cambie
 
   const handleDelete = (id) => {
     console.log("Printing id", id);
@@ -172,7 +158,8 @@ const ReparacionList = () => {
             ))}
           </TableBody>
         </Table>
-        <Button
+      </TableContainer>
+      <Button
           variant="contained"
           color="primary"
           onClick={() => navigate("/vehiculo/list")}
@@ -180,10 +167,10 @@ const ReparacionList = () => {
         >
           Lista de Vehiculos
         </Button>
-      </TableContainer>
+        
     </div>
 
   );
 };
 
-export default ReparacionList;
+export default ReparacionListMarca;

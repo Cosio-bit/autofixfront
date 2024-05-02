@@ -28,6 +28,8 @@ function App() {
               <Route path="/reparacion/edit/:id" element={<ReparacionEdit/>} />
               <Route path="/marca/list" element={<MarcaList/>} />
               <Route path="/marca/add" element={<MarcaAdd/>} />
+              <Route path="/marca/edit/:id" element={<MarcaAdd/>} />
+              <Route path="/reparacion/list/:marca" element={<ReparacionList/>} />
               
             </Routes>
           </div>

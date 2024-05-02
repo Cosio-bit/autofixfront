@@ -40,7 +40,9 @@ const AddReparacion = () => {
         };
         
         reparacionService
-            .create(reparacion)
+        Promise.all([
+            reparacionService.create(reparacion) // Update repair's total amount
+          ])
             .then((response) => {
                 console.log("reparacion ha sido añadido.", response.data);
                 navigate("/reparacion/list");
@@ -96,22 +98,21 @@ const AddReparacion = () => {
         setTipoReparacion(tipoReparacion);
     }
 
-  return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      component="form"
-      style={{
-        backgroundColor: "#1c3e4a",
-        padding: "50px",
-        borderRadius: "10px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        color: "#f0f0f0"
-    }}>
-      <h3 style={{ marginBottom: "20px", color: "white" }}>{titleReparacionForm}</h3>
-      <hr style={{ width: "100%", border: "none", borderBottom: "1px solid #fff", marginBottom: "20px" }} />
+  return (  <Box
+    display="flex"
+    flexDirection="column"
+    alignItems="center"
+    justifyContent="center"
+    component="form"
+    style={{
+      backgroundColor: "#8c9eff", // Very pale lilac background color
+      minHeight: "100vh", // Ensure the same height as the previous container
+      padding: "20px",
+      color: "#000", // Adjust text color to black
+    }}
+  >
+    <h3 style={{ marginBottom: "20px", color: "#000" }}>{titleReparacionForm}</h3>
+    <hr style={{ width: "100%", border: "none", borderBottom: "1px solid black", marginBottom: "20px" }} />
       <hr />
       <form>
 
@@ -196,19 +197,7 @@ const AddReparacion = () => {
 
         <DropdownTipoReparacion onChange={handleTipoReparacionChange} />
 
-        <FormControl fullWidth>
-            <TextField
-            id="montoTotal"
-            label="Monto Total"
-            type="number"
-            value={montoTotal}
-            variant="standard"
-            onChange={(e) => setMontoTotal(e.target.value)}
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
-            />
-        </FormControl>
-
+        
         <FormControl>
           <br />
           <Button

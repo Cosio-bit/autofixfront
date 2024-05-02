@@ -10,69 +10,96 @@ import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import  DropdownTipoReparacion  from './TipoReparacion';
 
-
 const EditReparacion = () => {
-  const [idVehiculo, setIdVehiculo] = useState(""); //  según la entidad
-  const [fechaHoraIngreso, setFechaHoraIngreso] = useState(new Date());
-  const [fechaHoraSalida, setFechaHoraSalida] = useState("");
-  const [fechaHoraRetiro, setFechaHoraRetiro] = useState("");
+  const [idVehiculo, setIdVehiculo] = useState("");
+  const [fechaHoraIngreso, setFechaHoraIngreso] = useState(null);
+  const [fechaHoraSalida, setFechaHoraSalida] = useState(null);
+  const [fechaHoraRetiro, setFechaHoraRetiro] = useState(null);
   const [tipoReparacion, setTipoReparacion] = useState("");
-  const [montoTotal, setMontoTotal] = useState(0); // Asumiendo que nroAsientos es un número
+  const [montoTotal, setMontoTotal] = useState(0);
   const { id } = useParams();
   const [titleReparacionForm, setTitleReparacionForm] = useState("");
+  const [loading, setLoading] = useState(true); // Added loading state
   const navigate = useNavigate();
+  const [additionalString, setAdditionalString] = useState('');
 
-  const saveReparacion = (e) => {
-    e.preventDefault();
+  // URL de la imagen de Internet
+const backgroundImageUrl = "https://imgs.search.brave.com/2s2NZU7sv94_N-AIsDMpNQ_9VQLAIjYqll8aUf5tE_I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9yZXRy/by1yZWQtY2FyLXN5/bnRod2F2ZS1wb3N0/ZXItdmFwb3J3YXZl/LXN1bnNldC1uZW9u/LWdyYWRpZW50LWJh/Y2tncm91bmQtcmV0/cm8tcmVkLWNhci1z/eW50aHdhdmUtcG9z/dGVyLXZhcG9yd2F2/ZS0yNjIwNDgzMDAu/anBn";
 
-    const reparacion = { 
-        idVehiculo, 
-        fechaHoraIngreso, 
-        fechaHoraSalida, 
-        fechaHoraRetiro, 
-        tipoReparacion, 
-        montoTotal,
-        id
-      };
 
-    if (id) {
-      //Actualizar Datos
-      Promise.all([
-        reparacionService.update(reparacion), // Update repair data
-        reparacionService.updateMonto(reparacion) // Update repair's total amount
-      ])
-        .then((response) => {
-          console.log("reparacion ha sido actualizado.", response.data);
-          navigate("/reparacion/list");
-        })
-        .catch((error) => {
-          console.log(
-            "Ha ocurrido un error al intentar actualizar datos del reparacion.",
-            error
-          );
-        });
-    }
-  };
-
-  
   useEffect(() => {
     if (id) {
       setTitleReparacionForm("Editar reparacion");
       reparacionService
         .get(id)
         .then((reparacion) => {
-          setIdVehiculo(reparacion.data.idVehiculo);
-          setFechaHoraIngreso(reparacion.data.fechaHoraIngreso);
-          setFechaHoraSalida(reparacion.data.fechaHoraSalida);
-          setFechaHoraRetiro(reparacion.data.fechaHoraRetiro);
-          setTipoReparacion(reparacion.data.tipoReparacion);
-          setMontoTotal(reparacion.data.montoTotal);
+          const data = reparacion.data;
+          setIdVehiculo(data.idVehiculo || "");
+          setFechaHoraIngreso(data.fechaHoraIngreso ? new Date(data.fechaHoraIngreso) : null);
+          setFechaHoraSalida(data.fechaHoraSalida ? new Date(data.fechaHoraSalida) : null);
+          setFechaHoraRetiro(data.fechaHoraRetiro ? new Date(data.fechaHoraRetiro) : null);
+          setTipoReparacion(data.tipoReparacion || "");
+          setMontoTotal(data.montoTotal || 0);
+          setLoading(false); // Set loading to false when data is fetched
         })
         .catch((error) => {
           console.log("Se ha producido un error.", error);
+          setLoading(false); // Set loading to false on error as well
         });
     }
-  }, [id]);
+  }, [id]); // Moved id from dependency array of second useEffect
+
+  useEffect(() => {
+    if (id) {
+      setTitleReparacionForm("Editar reparacion");
+    }
+  }, [id]); // Added second useEffect for setting titleReparacionForm
+
+  if (loading) {
+    return <div>Loading...</div>; // Render a loading indicator while data is being fetched
+  }
+
+  const saveReparacion = (e) => {
+    e.preventDefault();
+
+    const reparacion = {
+      idVehiculo,
+      fechaHoraIngreso,
+      fechaHoraSalida,
+      fechaHoraRetiro,
+      tipoReparacion,
+      montoTotal,
+      id
+    };
+
+    if (id) {
+      // Actualizar Datos
+      Promise.all([
+        reparacionService.update(reparacion), // Update repair data
+        reparacionService.updateMonto(reparacion) // Update repair's total amount
+      ])
+        .then((responses) => {
+          const [updateResponse, updateMontoResponse] = responses;
+          console.log("Reparacion ha sido actualizado.", updateResponse.data);
+          console.log("Monto de reparacion ha sido actualizado.", updateMontoResponse.data);
+    
+        alert(updateMontoResponse.data);
+
+        //reload page
+        window.location.reload();
+
+          
+        })
+        .catch((error) => {
+          console.log(
+            "An error occurred while trying to update repair data.",
+            error
+          );
+        });
+    }
+    
+  };    
+
 
   const handleDateChangeIngreso = (date) => {
     setFechaHoraIngreso(date);
@@ -117,23 +144,22 @@ const handleTipoReparacionChange = (tipoReparacion) => {
 
   
 
-  return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      component="form"
-      style={{
-        backgroundColor: "#1c3e4a",
-        padding: "50px",
-        borderRadius: "10px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        color: "#f0f0f0"
-    }}>
-      <h3 style={{ marginBottom: "20px", color: "white" }}>{titleReparacionForm}</h3>
-      <hr style={{ width: "100%", border: "none", borderBottom: "1px solid #fff", marginBottom: "20px" }} />
-      <hr />
+  return (   <Box
+    display="flex"
+    flexDirection="column"
+    alignItems="center"
+    justifyContent="center"
+    component="form"
+    style={{
+      backgroundColor: "#8c9eff", // Very pale lilac background color
+      minHeight: "100vh", // Ensure the same height as the previous container
+      padding: "20px",
+      color: "#000", // Adjust text color to black
+    }}
+  >
+    <h3 style={{ marginBottom: "20px", color: "#000" }}>{titleReparacionForm}</h3>
+    <hr style={{ width: "100%", border: "none", borderBottom: "1px solid black", marginBottom: "20px" }} />
+    {/* Additional content goes here */}
       <form>
         <FormControl fullWidth>
             <TextField
@@ -143,8 +169,8 @@ const handleTipoReparacionChange = (tipoReparacion) => {
             variant="standard"
             onChange={(e) => setIdVehiculo(e.target.value)}
             helperText="Ej. ABC123"
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
+            InputLabelProps={{ style: { color: "#000" } }}
+            InputProps={{ style: { color: "#000" } }}
             />
         </FormControl>
 
@@ -178,7 +204,7 @@ const handleTipoReparacionChange = (tipoReparacion) => {
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                 <div style={{ flex: '1' }}>
                     <Datetime
-                        inputProps={{ style: { color: "#f0f0f0" } }}
+                       inputProps={{ style: { color: "#f0f0f0" } }}
                         value={fechaHoraSalida}
                         onChange={handleDateChangeSalida}
                         dateFormat="YYYY-MM-DD"
@@ -237,8 +263,8 @@ const handleTipoReparacionChange = (tipoReparacion) => {
             value={montoTotal}
             variant="standard"
             onChange={(e) => setMontoTotal(e.target.value)}
-            InputLabelProps={{ style: { color: "#f0f0f0" } }}
-            InputProps={{ style: { color: "#f0f0f0" } }}
+            InputLabelProps={{ style: { color: "#000" } }}
+            InputProps={{ style: { color: "#000" } }}
             />
           </div>
         </FormControl>
@@ -253,12 +279,13 @@ const handleTipoReparacionChange = (tipoReparacion) => {
             style={{ marginLeft: "0.5rem" }}
             startIcon={<SaveIcon />}
           >
-            Guardar
+            Guardar cambios y recalcular monto
           </Button>
         </FormControl>
+
       </form>
       <hr />
-      <Link to="/reparacion/list">Volver a la Lista</Link>
+      <Link to="/reparacion/list" style={{ color: "#000" }}>Volver a la Lista</Link>
     </Box>
   );
 };

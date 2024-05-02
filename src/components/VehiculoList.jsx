@@ -70,6 +70,10 @@ const VehiculoList = () => {
     navigate(`/reparacion/list/${id}`);
   };
 
+  const handleReparacionesMarca = (marca) => {
+    navigate(`/reparacion/list/${marca}`);
+  };
+
   const handleAnadirReparacion = (id) => {
     navigate(`/reparacion/add/${id}`);
   }
@@ -190,6 +194,25 @@ const VehiculoList = () => {
             ))}
           </TableBody>
         </Table>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/reparacion/list")}
+          style={{ marginLeft: "0.5rem" }}
+        >
+          Lista de Reparaciones
+        </Button>
+
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleReparacionesMarca("Toyota")}
+          style={{ marginLeft: "0.5rem" }}
+        >
+          Reparaciones Toyota
+        </Button>
+
       </TableContainer>
     </div>
   );
