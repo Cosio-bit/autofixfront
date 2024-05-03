@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import reparacionService from "../services/reparacion.service";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import SaveIcon from "@mui/icons-material/Save";
@@ -19,7 +18,7 @@ const AddReparacion = () => {
     const [fechaHoraSalida, setFechaHoraSalida] = useState("");
     const [fechaHoraRetiro, setFechaHoraRetiro] = useState("");
     const [tipoReparacion, setTipoReparacion] = useState("");
-    const [montoTotal, setMontoTotal] = useState(0); // Assuming montoTotal is a number
+    const [montoTotal, ] = useState(0); // Assuming montoTotal is a number
     const [titleReparacionForm, setTitleReparacionForm] = useState("");
     const [id] = useState(0); // According to the entity
     const navigate = useNavigate();

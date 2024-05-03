@@ -213,36 +213,40 @@ const VehiculoList = () => {
         >
           Lista de Reparaciones
         </Button>
+        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", marginRight: "0.5rem" }}>
+          <DropdownTipoMarca onChange={handleReparacionesMarca} />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleReparacionesMarca()}
+          >
+            Elegir marca de vehiculo para ver reparaciones
+          </Button>
+        </div>
 
-        <DropdownTipoMarca onChange={handleReparacionesMarca} />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleReparacionesMarca}
-          style={{ marginLeft: "0.5rem" }}
-        >
-          Elegir marca de vehiculo para ver reparaciones
-        </Button>
+        <div style={{ display: "flex", alignItems: "center", marginRight: "0.5rem" }}>
+          <DropdownTipoMotor onChange={handleReparacionesTipoMotor} />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleReparacionesTipoMotor()}
+          >
+            Elegir tipo de motor para ver reparaciones
+          </Button>
+        </div>
 
-        <DropdownTipoMotor onChange={handleReparacionesTipoMotor} />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleReparacionesTipoMotor}
-          style={{ marginLeft: "0.5rem" }}
-        >
-          Elegir tipo de motor para ver reparaciones
-        </Button>
-
-        <DropdownTipoVehiculo onChange={handleReparacionesTipoVehiculo} />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleReparacionesTipoVehiculo}
-          style={{ marginLeft: "0.5rem" }}
-        >
-          Elegir tipo de vehiculo para ver reparaciones
-        </Button>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <DropdownTipoVehiculo onChange={handleReparacionesTipoVehiculo} />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleReparacionesTipoVehiculo()}
+          >
+            Elegir tipo de vehiculo para ver reparaciones
+          </Button>
+        </div>
+      </div>
 
       </TableContainer>
     </div>

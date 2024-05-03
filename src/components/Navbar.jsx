@@ -1,17 +1,23 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useState } from "react";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 
 export default function Navbar() {
-  const [setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const toggleDrawer = (open) => () => {
-    setOpen(open);
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -24,19 +30,33 @@ export default function Navbar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={toggleDrawer(true)}
+            onClick={handleMenu}
           >
             <MenuIcon />
           </IconButton>
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SisGR: Sistema de Gestión Remuneraciones
+            Autofix: Sistema de Reparaciones de Vehiculos
           </Typography>
-          <Button color="inherit">Login</Button>
+
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem component={Link} to="/vehiculo/list" onClick={handleClose}>
+              Lista de Vehiculos
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              to="/reparacion/list"
+              onClick={handleClose}
+            >
+              Lista de Reparaciones
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
-
-    
     </Box>
   );
 }
