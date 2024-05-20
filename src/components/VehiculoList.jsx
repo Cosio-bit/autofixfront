@@ -15,12 +15,49 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DropdownTipoMarca from "./TipoMarca";
 import DropdownTipoMotor from "./TipoMotor";
 import DropdownTipoVehiculo from "./TipoVehiculo";
+import WebFont from "webfontloader";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-// URL de la imagen de Internet
-const backgroundImageUrl = "https://imgs.search.brave.com/2s2NZU7sv94_N-AIsDMpNQ_9VQLAIjYqll8aUf5tE_I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9yZXRy/by1yZWQtY2FyLXN5/bnRod2F2ZS1wb3N0/ZXItdmFwb3J3YXZl/LXN1bnNldC1uZW9u/LWdyYWRpZW50LWJh/Y2tncm91bmQtcmV0/cm8tcmVkLWNhci1z/eW50aHdhdmUtcG9z/dGVyLXZhcG9yd2F2/ZS0yNjIwNDgzMDAu/anBn";
 
 const VehiculoList = () => {
   const [vehiculos, setVehiculos] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+    setSelectedOption('');
+  };
+
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+  };
+
+  const handleReparacionesMarca = (marca) => {
+    navigate(`/reparacion/list/marca/${marca}`);
+  };
+
+  const handleReparacionesTipoMotor = (tipoMotor) => {
+    navigate(`/reparacion/list/tipoMotor/${tipoMotor}`);
+  };
+
+  const handleReparacionesTipoVehiculo = (tipoVehiculo) => {
+    navigate(`/reparacion/list/tipoVehiculo/${tipoVehiculo}`);
+  };
+
+
+  const handleButtonClick = () => {
+    if (selectedCategory && selectedOption) {
+      console.log(`Selected ${selectedCategory}: ${selectedOption}`);
+      if (selectedCategory === 'marca') {
+        handleReparacionesMarca(selectedOption);
+      } else if (selectedCategory === 'motor') {
+        handleReparacionesTipoMotor(selectedOption);
+      } else if (selectedCategory === 'vehiculo') {
+        handleReparacionesTipoVehiculo(selectedOption);
+      }
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -40,6 +77,11 @@ const VehiculoList = () => {
   };
 
   useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ['Fredoka One', 'Audiowide', 'Quantico'] // Add more font families if needed
+      }
+    });
     init();
   }, []);
 
@@ -73,184 +115,173 @@ const VehiculoList = () => {
     navigate(`/reparacion/list/${id}`);
   };
 
-  const handleReparacionesMarca = (marca) => {
-    navigate(`/reparacion/list/marca/${marca}`);
-  };
-
-  const handleReparacionesTipoMotor = (tipoMotor) => {
-    navigate(`/reparacion/list/tipoMotor/${tipoMotor}`);
-  };
-
-  const handleReparacionesTipoVehiculo = (tipoVehiculo) => {
-    navigate(`/reparacion/list/tipoVehiculo/${tipoVehiculo}`);
-  };
-
   const handleAnadirReparacion = (id) => {
     navigate(`/reparacion/add/${id}`);
   }
 
-  return (
+  
+const headerStyle = {
+  borderRight: "2px solid #CAB0F3",
+  borderBottom: "1px solid #CAB0F3",
+  fontWeight: "bold",
+  fontSize: "1.1rem",
+  color: "#9D1D7D",
+  fontFamily: "Audiowide",
+  whiteSpace: "nowrap"
+};
+
+const bodyStyle = {
+  borderRight: "2px solid #CAB0F3",
+  borderBottom: "1px solid #CAB0F3",
+  fontFamily: "Quantico",
+  whiteSpace: "nowrap"
+};
+return (
+  <div
+    style={{
+      backgroundSize: 'cover',
+      minHeight: '100vh',
+    }}
+  >
     <div
       style={{
-        backgroundImage: `url(${backgroundImageUrl})`,
-        backgroundSize: "cover",
-        minHeight: "100vh",
+        backgroundSize: 'cover',
+        minHeight: '10vh',
+        marginTop: '10px', // Adjust this value to create space
       }}
     >
-      <TableContainer component={Paper} style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}>
-        <br />
-        <Link
-          to="/vehiculo/add"
-          style={{ textDecoration: "none", marginBottom: "1rem" }}
-        >
+    </div>
+    <TableContainer component={Paper} style={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', width: '130%', margin: '0', padding: 40, marginLeft: "-240px"}}>
+      <br />
+      <h2 style={{ textAlign: 'center', color: '#9D1D7D', fontFamily: 'Audiowide' }}>Listado de Vehículos</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <Link to="/vehiculo/add" style={{ textDecoration: 'none' }}>
           <Button
             variant="contained"
             color="primary"
+            style={{ backgroundColor: '#9D1D7D', color: 'white', fontFamily: 'Quantico' }}
             startIcon={<PersonAddIcon />}
           >
             Añadir Vehiculo
           </Button>
         </Link>
-        <br /> <br />
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                patente
-              </TableCell>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                marca
-              </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                modelo
-              </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                Año de Fabricación
-              </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                Tipo de Vehículo
-              </TableCell>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                Tipo de Motor
-              </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                Número de Asientos
-              </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                Kilometraje
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {vehiculos.map((vehiculo) => (
-              <TableRow
-                key={vehiculo.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="left">{vehiculo.patente}</TableCell>
-                <TableCell align="left">{vehiculo.marca}</TableCell>
-                <TableCell align="left">{vehiculo.modelo}</TableCell>
-                <TableCell align="left">{vehiculo.annoFabricacion}</TableCell>
-                <TableCell align="left">{vehiculo.tipoVehiculo}</TableCell>
-                <TableCell align="left">{vehiculo.tipoMotor}</TableCell>
-                <TableCell align="right">{vehiculo.nroAsientos}</TableCell>
-                <TableCell align="right">{vehiculo.kilometraje}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="info"
-                    size="small"
-                    onClick={() => handleEdit(vehiculo.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<EditIcon />}
-                  >
-                    Editar
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    color="error"
-                    size="small"
-                    onClick={() => handleDelete(vehiculo.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<DeleteIcon />}
-                  >
-                    Eliminar
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    onClick={() => handleReparacionesVehiculo(vehiculo.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<EditIcon />}
-                  >
-                    Reparaciones
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    onClick={() => handleAnadirReparacion(vehiculo.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<EditIcon />}
-                  >
-                    Añadir Reparación
-                  </Button>
-
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
         <Button
           variant="contained"
           color="primary"
-          onClick={() => navigate("/reparacion/list")}
-          style={{ marginLeft: "0.5rem" }}
+          onClick={() => navigate('/reparacion/list')}
+          style={{ backgroundColor: '#9D1D7D', color: 'white', fontFamily: 'Quantico' }}
         >
           Lista de Reparaciones
         </Button>
-        <div style={{ display: "flex", alignItems: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", marginRight: "0.5rem" }}>
-          <DropdownTipoMarca onChange={handleReparacionesMarca} />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleReparacionesMarca()}
-          >
-            Elegir marca de vehiculo para ver reparaciones
-          </Button>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", marginRight: "0.5rem" }}>
-          <DropdownTipoMotor onChange={handleReparacionesTipoMotor} />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleReparacionesTipoMotor()}
-          >
-            Elegir tipo de motor para ver reparaciones
-          </Button>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <DropdownTipoVehiculo onChange={handleReparacionesTipoVehiculo} />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleReparacionesTipoVehiculo()}
-          >
-            Elegir tipo de vehiculo para ver reparaciones
-          </Button>
-        </div>
       </div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <p style={{ color: '#9D1D7D', fontFamily: 'Audiowide', marginLeft: 'auto' }}>
+          Puedes filtrar por tipo de motor, vehiculo y marca para ver las reparaciones asociadas a cada uno.
+        </p>
+            <FormControl fullWidth style={{ marginBottom: '1rem' }}>
+        <InputLabel id="category-label">Category</InputLabel>
+        <Select
+          labelId="category-label"
+          id="category"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+        >
+          <MenuItem value="marca">Marca</MenuItem>
+          <MenuItem value="motor">Tipo Motor</MenuItem>
+          <MenuItem value="vehiculo">Tipo Vehiculo</MenuItem>
+        </Select>
+      </FormControl>
 
-      </TableContainer>
+      {selectedCategory === 'marca' && <DropdownTipoMarca onChange={handleOptionChange} />}
+      {selectedCategory === 'motor' && <DropdownTipoMotor onChange={handleOptionChange} />}
+      {selectedCategory === 'vehiculo' && <DropdownTipoVehiculo onChange={handleOptionChange} />}
+
+      <Button
+        variant="contained"
+        color="primary"
+        style={{ backgroundColor: '#9D1D7D', color: 'white', fontFamily: 'Quantico', marginTop: '1rem', marginLeft: 'auto'}}
+        onClick={handleButtonClick}
+      >
+        Elegir Tipo de {selectedCategory} para filtrar reparaciones
+      </Button>
     </div>
-  );
+      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="right" style={headerStyle}>patente</TableCell>
+            <TableCell align="right" style={headerStyle}>marca</TableCell>
+            <TableCell align="right" style={headerStyle}>modelo</TableCell>
+            <TableCell align="right" style={headerStyle}>Año de Fabricación</TableCell>
+            <TableCell align="right" style={headerStyle}>Tipo de Vehículo</TableCell>
+            <TableCell align="right" style={headerStyle}>Tipo de Motor</TableCell>
+            <TableCell align="right" style={headerStyle}>Número de Asientos</TableCell>
+            <TableCell align="right" style={headerStyle}>Kilometraje</TableCell>
+            <TableCell align="right" style={headerStyle}>Acciones</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {vehiculos.map((vehiculo) => (
+            <TableRow key={vehiculo.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+              <TableCell align="right" style={bodyStyle}>{vehiculo.patente}</TableCell>
+              <TableCell align="right" style={bodyStyle}>{vehiculo.marca}</TableCell>
+              <TableCell align="right" style={bodyStyle}>{vehiculo.modelo}</TableCell>
+              <TableCell align="right" style={bodyStyle}>{vehiculo.annoFabricacion}</TableCell>
+              <TableCell align="right" style={bodyStyle}>{vehiculo.tipoVehiculo}</TableCell>
+              <TableCell align="right" style={bodyStyle}>{vehiculo.tipoMotor}</TableCell>
+              <TableCell align="right" style={bodyStyle}>{vehiculo.nroAsientos}</TableCell>
+              <TableCell align="right" style={bodyStyle}>{vehiculo.kilometraje}</TableCell>
+              <TableCell align="right" style={bodyStyle}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "center" }}>
+  <Button
+    variant="contained"
+    color="info"
+    size="small"
+    onClick={() => handleEdit(vehiculo.id)}
+    style={{ backgroundColor: '#DC0B90', color: 'black', fontFamily: 'Quantico', width: 'calc(50% - 0.25rem)' }}
+    startIcon={<EditIcon />}
+  >
+    Editar
+  </Button>
+  <Button
+    variant="contained"
+    color="error"
+    size="small"
+    onClick={() => handleDelete(vehiculo.id)}
+    style={{ backgroundColor: '#DC0B90', color: 'black', fontFamily: 'Quantico', width: 'calc(50% - 0.25rem)' }}
+    startIcon={<DeleteIcon />}
+  >
+    Eliminar
+  </Button>
+  <Button
+    variant="contained"
+    color="secondary"
+    size="small"
+    onClick={() => handleReparacionesVehiculo(vehiculo.id)}
+    style={{ backgroundColor: '#DC0B90', color: 'black', fontFamily: 'Quantico', width: 'calc(50% - 0.25rem)' }}
+    startIcon={<EditIcon />}
+  >
+    Reparaciones
+  </Button>
+  <Button
+    variant="contained"
+    color="primary"
+    size="small"
+    onClick={() => handleAnadirReparacion(vehiculo.id)}
+    style={{ backgroundColor: '#DC0B90', color: 'black', fontFamily: 'Quantico', width: 'calc(50% - 0.25rem)' }}
+    startIcon={<EditIcon />}
+  >
+    Añadir Reparación
+  </Button>
+</div>
+
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </div>
+);
 };
 
 export default VehiculoList;

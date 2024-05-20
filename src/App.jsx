@@ -12,13 +12,16 @@ import MarcaAdd from './components/MarcaAdd';
 import ReparacionListMarca from './components/ReparacionListMarca';
 import ReparacionListTipoMotor from './components/ReparacionListTipoMotor';
 import ReparacionListTipoVehiculo from './components/ReparacionListTipoVehiculo';
+import BackgroundImage from './components/BackgroundImage';
 
-
+const retrowaveImage = `url(https://images6.alphacoders.com/121/1213573.png)`;
+const logoImage = "/src/components/logo.png";
 function App() {
   return (
       <Router>
-          <div className="container">
-          <Navbar></Navbar>
+          <div className="container"> 
+          <Navbar logo={logoImage} />
+          <BackgroundImage imageUrl={retrowaveImage}> </BackgroundImage>
             <Routes>
               <Route path="/" element={<Home/>} />
               <Route path="/vehiculo/list" element={<VehiculoList/>} />
@@ -38,6 +41,7 @@ function App() {
               
             </Routes>
           </div>
+          
       </Router>
   );
 }

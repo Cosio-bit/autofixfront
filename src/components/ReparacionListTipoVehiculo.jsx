@@ -10,22 +10,25 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useParams } from "react-router-dom";
+import WebFont from "webfontloader";
 
-// URL de la imagen de Internet
-const backgroundImageUrl = "https://imgs.search.brave.com/2s2NZU7sv94_N-AIsDMpNQ_9VQLAIjYqll8aUf5tE_I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9yZXRy/by1yZWQtY2FyLXN5/bnRod2F2ZS1wb3N0/ZXItdmFwb3J3YXZl/LXN1bnNldC1uZW9u/LWdyYWRpZW50LWJh/Y2tncm91bmQtcmV0/cm8tcmVkLWNhci1z/eW50aHdhdmUtcG9z/dGVyLXZhcG9yd2F2/ZS0yNjIwNDgzMDAu/anBn";
-// eslint-disable-next-line react/prop-types
+
 const ReparacionList = () => {
   const [reparaciones, setReparaciones] = useState([]);
   const { tipoVehiculo } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ['Fredoka One', 'Audiowide', 'Quantico'] // Add more font families if needed
+      }
+    });
     init(tipoVehiculo); // Pasamos el parámetro tipoVehiculo cuando está presente
   }, [tipoVehiculo]); // Dependencias del efecto
   
   const init = () => {
     //si es numero entonces es idVehiculo, si no es tipoVehiculo
-    
       if (tipoVehiculo) {
       reparacionService
         .getByTipoVehiculo(tipoVehiculo)
@@ -66,33 +69,42 @@ const ReparacionList = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${backgroundImageUrl})`,
+        //backgroundImage: `url(${backgroundImageUrl})`,
         backgroundSize: "cover",
         minHeight: "100vh",
       }}
     >
-      <TableContainer component={Paper} style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}>
+      <div
+    style={{
+      backgroundSize: "cover",
+      minHeight: "10vh",
+      marginTop: "10px", // Adjust this value to create space
+    }}
+    ></div>
+<TableContainer component={Paper} style={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', width: '130%', margin: '0', padding: 40, marginLeft: "-240px"}}>
         <br />
+        
+        <h2 style={{ textAlign: "center", color: "#9D1D7D", fontFamily:"Audiowide" }}>Listado de Reparaciones por Tipo de Vehículo</h2>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
-            <TableRow>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                fechaHoraIngreso
+          <TableRow>
+            <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Fecha Hora Ingreso
               </TableCell>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                tipoReparacion
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Tipo Reparacion
               </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                montoTotal
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Monto Total
               </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                fechaHoraSalida
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Fecha Hora Salida
               </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-                fechaHoraRetiro
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Fecha Hora Retiro
               </TableCell>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                idVehiculo
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Id Vehiculo
               </TableCell>
             </TableRow>
           </TableHead>
@@ -102,12 +114,12 @@ const ReparacionList = () => {
                 key={reparacion.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="left">{reparacion.fechaHoraIngreso}</TableCell>
-                <TableCell align="left">{reparacion.tipoReparacion}</TableCell>
-                <TableCell align="left">{reparacion.montoTotal}</TableCell>
-                <TableCell align="left">{reparacion.fechaHoraSalida}</TableCell>
-                <TableCell align="left">{reparacion.fechaHoraRetiro}</TableCell>
-                <TableCell align="left">{reparacion.idVehiculo}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.fechaHoraIngreso}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.tipoReparacion}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.montoTotal}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.fechaHoraSalida}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.fechaHoraRetiro}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.idVehiculo}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -126,7 +138,7 @@ const ReparacionList = () => {
           variant="contained"
           color="primary"
           onClick={() => navigate("/vehiculo/list")}
-          style={{ marginLeft: "0.5rem" }}
+          style={{ backgroundColor: "#DC0B90", color: "black", marginLeft: "0.5rem", fontFamily: "Quantico"  }}
         >
           Lista de Vehiculos
         </Button>

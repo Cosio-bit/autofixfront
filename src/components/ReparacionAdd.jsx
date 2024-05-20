@@ -5,18 +5,22 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import SaveIcon from "@mui/icons-material/Save";
-import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import  DropdownTipoReparacion  from './TipoReparacion';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { StaticDateTimePicker } from '@mui/x-date-pickers/StaticDateTimePicker';
+import dayjs from 'dayjs';
+import TextField from "@mui/material/TextField";
 
 
 
 const AddReparacion = () => {
     const { idVehiculo } = useParams();
     const [vehiculoId, ] = useState(parseInt(idVehiculo)); // Parse idVehiculo as integer
-    const [fechaHoraIngreso, setFechaHoraIngreso] = useState("");
-    const [fechaHoraSalida, setFechaHoraSalida] = useState("");
-    const [fechaHoraRetiro, setFechaHoraRetiro] = useState("");
+    const [fechaHoraIngreso, setFechaHoraIngreso] = useState(null);
+    const [fechaHoraSalida, setFechaHoraSalida] = useState(null);
+    const [fechaHoraRetiro, setFechaHoraRetiro] = useState(null);
     const [tipoReparacion, setTipoReparacion] = useState("");
     const [montoTotal, ] = useState(0); // Assuming montoTotal is a number
     const [titleReparacionForm, setTitleReparacionForm] = useState("");
@@ -62,35 +66,12 @@ const AddReparacion = () => {
         setFechaHoraIngreso(date);
     };
 
-    const handleTimeChangeIngreso = (time) => {
-        const nuevaFechaHoraIngreso= fechaHoraIngreso ? new Date(fechaHoraIngreso) : new Date(Date.now());
-        nuevaFechaHoraIngreso.setHours(time.hours());
-        nuevaFechaHoraIngreso.setMinutes(time.minutes());
-        setFechaHoraIngreso(nuevaFechaHoraIngreso); // Establecer la nueva fecha y hora
-    };
-    
-
     const handleDateChangeSalida = (date) => {
         setFechaHoraSalida(date);
     };
 
-    const handleTimeChangeSalida = (time) => {
-        const nuevaFechaHoraSalida = fechaHoraSalida ? new Date(fechaHoraSalida) : new Date(Date.now()); // Crear una nueva fecha a partir de la fecha actual
-        nuevaFechaHoraSalida.setHours(time.hours());
-        nuevaFechaHoraSalida.setMinutes(time.minutes());
-        setFechaHoraSalida(nuevaFechaHoraSalida); // Establecer la nueva fecha y hora
-    };
-
     const handleDateChangeRetiro = (date) => {
         setFechaHoraRetiro(date);
-    };
-
-
-    const handleTimeChangeRetiro = (time) => {
-        const nuevaFechaHoraRetiro = fechaHoraRetiro ? new Date(fechaHoraRetiro) : new Date(Date.now()); // Crear una nueva fecha a partir de la fecha actual
-        nuevaFechaHoraRetiro.setHours(time.hours());
-        nuevaFechaHoraRetiro.setMinutes(time.minutes());
-        setFechaHoraRetiro(nuevaFechaHoraRetiro); // Establecer la nueva fecha y hora
     };
 
     const handleTipoReparacionChange = (tipoReparacion) => {
@@ -120,26 +101,15 @@ const AddReparacion = () => {
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
         <h2 style={{ color: '#333', margin: '0' }}>Fecha de Ingreso</h2>
             <div style={{ flex: '1' }}>
-                <Datetime
-                    inputProps={{ style: { color: "#f0f0f0" } }}
-                    value={fechaHoraIngreso}
-                    onChange={handleDateChangeIngreso}
-                    dateFormat="YYYY-MM-DD"
-                    timeFormat={false}
-                    locale="es"
-                />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <StaticDateTimePicker
+                        value={dayjs(fechaHoraIngreso)}
+                        onChange={handleDateChangeIngreso}
+                        textField={<TextField />}
+                        />
+                </LocalizationProvider>
             </div>
             
-            <div>
-                <Datetime
-                    inputProps={{ style: { color: "#f0f0f0" } }}
-                    value={fechaHoraIngreso}
-                    onChange={handleTimeChangeIngreso}
-                    dateFormat={false}
-                    timeFormat="HH:mm"
-                    locale="es"
-                />
-            </div>
         </div>
     </div>
 </FormControl>
@@ -148,25 +118,15 @@ const AddReparacion = () => {
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
             <h2 style={{ color: '#333', margin: '0' }}>Fecha de Salida</h2>
                 <div style={{ flex: '1' }}>
-                    <Datetime
-                        inputProps={{ style: { color: "#f0f0f0" } }}
-                        value={fechaHoraSalida}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <StaticDateTimePicker
+                        value={dayjs(fechaHoraSalida)}
                         onChange={handleDateChangeSalida}
-                        dateFormat="YYYY-MM-DD"
-                        timeFormat={false}
-                        locale="es"
-                    />
+                        textField={<TextField />}
+                        />
+                </LocalizationProvider>
                 </div>
-                <div>
-                    <Datetime
-                        inputProps={{ style: { color: "#f0f0f0" } }}
-                        value={fechaHoraSalida}
-                        onChange={handleTimeChangeSalida}
-                        dateFormat={false}
-                        timeFormat="HH:mm"
-                        locale="es"
-                    />
-                </div>
+                
             
             </div>
         </FormControl>
@@ -176,25 +136,15 @@ const AddReparacion = () => {
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
             <h2 style={{ color: '#333', margin: '0' }}>Fecha de Retiro</h2>
                 <div style={{ flex: '1' }}>
-                    <Datetime
-                        inputProps={{ style: { color: "#f0f0f0" } }}
-                        value={fechaHoraRetiro}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <StaticDateTimePicker
+                        value={dayjs(fechaHoraRetiro)}
                         onChange={handleDateChangeRetiro}
-                        dateFormat="YYYY-MM-DD"
-                        timeFormat={false}
-                        locale="es"
-                    />
+                        textField={<TextField />}
+                        />
+                </LocalizationProvider>
                 </div>
-                <div>
-                    <Datetime
-                        inputProps={{ style: { color: "#f0f0f0" } }}
-                        value={fechaHoraRetiro}
-                        onChange={handleTimeChangeRetiro}
-                        dateFormat={false}
-                        timeFormat="HH:mm"
-                        locale="es"
-                    />
-                </div>
+               
                
             </div>
         </FormControl>
@@ -211,7 +161,7 @@ const AddReparacion = () => {
             style={{ marginLeft: "0.5rem" }}
             startIcon={<SaveIcon />}
           >
-            Guardar
+            Guardar reparacion autofix
           </Button>
         </FormControl>
       </form>

@@ -12,18 +12,22 @@ import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useParams } from "react-router-dom";
+import WebFont from "webfontloader";
 
-// URL de la imagen de Internet
-const backgroundImageUrl = "https://imgs.search.brave.com/2s2NZU7sv94_N-AIsDMpNQ_9VQLAIjYqll8aUf5tE_I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9yZXRy/by1yZWQtY2FyLXN5/bnRod2F2ZS1wb3N0/ZXItdmFwb3J3YXZl/LXN1bnNldC1uZW9u/LWdyYWRpZW50LWJh/Y2tncm91bmQtcmV0/cm8tcmVkLWNhci1z/eW50aHdhdmUtcG9z/dGVyLXZhcG9yd2F2/ZS0yNjIwNDgzMDAu/anBn";
-// eslint-disable-next-line react/prop-types
 const ReparacionList = () => {
   const [reparaciones, setReparaciones] = useState([]);
   const { idVehiculo, marca } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ['Fredoka One', 'Audiowide', 'Quantico'] // Add more font families if needed
+      }
+    });
     init(marca); // Pasamos el parámetro marca cuando está presente
   }, [idVehiculo, marca]); // Dependencias del efecto
+
   
   const init = () => {
     //si es numero entonces es idVehiculo, si no es marca
@@ -94,45 +98,58 @@ const ReparacionList = () => {
     }
   };
   
-  
-
   const handleEdit = (id) => {
     console.log("Printing id", id);
     navigate(`/reparacion/edit/${id}`);
   };
 
+  const buttonStyle = {
+    backgroundColor: "#DC0B90",
+    color: "black",
+    fontFamily: "Quantico"
+  };
+
   return (
     <div
       style={{
-        backgroundImage: `url(${backgroundImageUrl})`,
         backgroundSize: "cover",
         minHeight: "100vh",
       }}
     >
-      <TableContainer component={Paper} style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}>
+      <div
+    style={{
+      backgroundSize: "cover",
+      minHeight: "10vh",
+      marginTop: "10px", // Adjust this value to create space
+    }}
+    ></div>
+<TableContainer component={Paper} style={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', width: '133%', margin: '0', padding: 40, marginLeft: "-240px"}}>
         <br />
-       
+    <h2 style={{ textAlign: "center", color: "#9D1D7D", fontFamily:"Audiowide" }}>Listado de Reparaciones</h2>
         <br /> <br />
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              fechaHoraIngreso
+            <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Fecha Hora Ingreso
               </TableCell>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              tipoReparacion
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Tipo Reparacion
               </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              montoTotal
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              MontoTotal
               </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              fechaHoraSalida
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Fecha Hora Salida
               </TableCell>
-              <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              fechaHoraRetiro
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Fecha Hora Retiro
               </TableCell>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
-              idVehiculo
+              <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Id Vehiculo
+              </TableCell>
+              <TableCell align="right" style={{ borderBottom: "1px solid #CAB0F3", fontWeight: "bold", fontSize: "1.1rem", color: "#9D1D7D", fontFamily: "Audiowide" }}>
+              Acciones
               </TableCell>
             </TableRow>
           </TableHead>
@@ -142,34 +159,36 @@ const ReparacionList = () => {
                 key={reparacion.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="left">{reparacion.fechaHoraIngreso}</TableCell>
-                <TableCell align="left">{reparacion.tipoReparacion}</TableCell>
-                <TableCell align="left">{reparacion.montoTotal}</TableCell>
-                <TableCell align="left">{reparacion.fechaHoraSalida}</TableCell>
-                <TableCell align="left">{reparacion.fechaHoraRetiro}</TableCell>
-                <TableCell align="left">{reparacion.idVehiculo}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="info"
-                    size="small"
-                    onClick={() => handleEdit(reparacion.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<EditIcon />}
-                  >
-                    Editar
-                  </Button>
-
-                  <Button
-                    variant="contained"
-                    color="error"
-                    size="small"
-                    onClick={() => handleDelete(reparacion.id)}
-                    style={{ marginLeft: "0.5rem" }}
-                    startIcon={<DeleteIcon />}
-                  >
-                    Eliminar
-                  </Button>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.fechaHoraIngreso}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.tipoReparacion}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.montoTotal}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.fechaHoraSalida}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.fechaHoraRetiro}</TableCell>
+                <TableCell align="right" style={{ borderRight: "2px solid #CAB0F3", borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>{reparacion.idVehiculo}</TableCell>
+                
+                <TableCell align="right" style={{  borderBottom: "1px solid #CAB0F3", fontFamily: "Quantico" }}>
+                <div style={{ display: 'flex', gap: '0.5rem',  }}>
+                    <Button
+                      variant="contained"
+                      color="info"
+                      size="small"
+                      onClick={() => handleEdit(reparacion.id)}
+                      style={buttonStyle}
+                      startIcon={<EditIcon />}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      size="small"
+                      onClick={() => handleDelete(reparacion.id)}
+                      style={buttonStyle}
+                      startIcon={<DeleteIcon />}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -179,7 +198,7 @@ const ReparacionList = () => {
           variant="contained"
           color="primary"
           onClick={() => navigate("/vehiculo/list")}
-          style={{ marginLeft: "0.5rem" }}
+          style={{ backgroundColor: "#9D1D7D", color: "white", marginLeft: '-850px',fontFamily: "Quantico"  }}
         >
           Lista de Vehiculos
         </Button>
